@@ -71,6 +71,12 @@ final class PhotoCollectionViewCell: BaseCollectionViewCell {
         isLike = true
     }
 
+    func configureData() {
+        mainImageView.layer.masksToBounds = true
+        mainImageView.layer.cornerRadius = 20
+        likeButton.isHidden = true
+    }
+
     @objc private func likeButtonTapped() {
         addLike?()
     }
