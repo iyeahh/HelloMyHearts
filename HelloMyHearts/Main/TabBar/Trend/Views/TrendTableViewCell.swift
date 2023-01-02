@@ -9,9 +9,9 @@ import UIKit
 import SnapKit
 
 final class TrendTableViewCell: UITableViewCell {
-    let titleLabel = {
+    private let titleLabel = {
         let label = UILabel()
-        label.font = Constant.Font.bold21
+        label.font = Constant.Font.bold19
         return label
     }()
 
@@ -21,6 +21,7 @@ final class TrendTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureHierarchy()
         configureLayout()
+        collectionView.showsHorizontalScrollIndicator = false
     }
     
     required init?(coder: NSCoder) {
@@ -51,5 +52,9 @@ final class TrendTableViewCell: UITableViewCell {
             make.horizontalEdges.bottom.equalToSuperview()
             make.top.equalTo(titleLabel.snp.bottom).offset(10)
         }
+    }
+
+    func setTitle(_ title: String) {
+        titleLabel.text = title
     }
 }

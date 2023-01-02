@@ -26,6 +26,13 @@ final class TrendViewController: BaseViewController {
         return tableView
     }()
 
+    var imageList: [[TopicPhoto]] = [[], [], []]
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        callRequest()
+    }
+
     override func configureHierarchy() {
         view.addSubview(largeTitleLabel)
         view.addSubview(tableView)
@@ -39,20 +46,80 @@ final class TrendViewController: BaseViewController {
 
         tableView.snp.makeConstraints { make in
             make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
-            make.top.equalTo(largeTitleLabel.snp.bottom).offset(10)
+            make.top.equalTo(largeTitleLabel.snp.bottom)
+        }
+    }
+
+    private func callRequest() {
+        let group = DispatchGroup()
+
+        group.enter()
+        DispatchQueue.global().async(group: group) {
+            APIService.shared.fetchTopicPhoto(topic: "golden-hour") { [weak self] response in
+                guard let self else { return }
+                switch response {
+                case .success(let success):
+                    imageList[0] = success
+                case .failure(let failure):
+                    print(failure)
+                }
+                group.leave()
+            }
+        }
+
+        group.enter()
+        DispatchQueue.global().async(group: group) {
+            APIService.shared.fetchTopicPhoto(topic: "business-work") { [weak self] response in
+                guard let self else { return }
+                switch response {
+                case .success(let success):
+                    print(success)
+                    imageList[1] = success
+                case .failure(let failure):
+                    print(failure)
+                }
+                group.leave()
+            }
+        }
+
+        group.enter()
+        DispatchQueue.global().async(group: group) {
+            APIService.shared.fetchTopicPhoto(topic: "architecture-interior") { [weak self] response in
+                guard let self else { return }
+                switch response {
+                case .success(let success):
+                    print(success)
+                    imageList[2] = success
+                case .failure(let failure):
+                    print(failure)
+                }
+                group.leave()
+            }
+        }
+
+        group.notify(queue: .main) { [weak self] in
+            guard let self else { return }
+            tableView.reloadData()
         }
     }
 }
 
 extension TrendViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return imageList.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TrendTableViewCell.identifier, for: indexPath) as? TrendTableViewCell else {
             return UITableViewCell()
         }
+        let title = [
+            Constant.LiteralString.Topic.goldenHour,
+            Constant.LiteralString.Topic.business,
+            Constant.LiteralString.Topic.interior
+        ]
+
+        cell.setTitle(title[indexPath.row])
 
         cell.collectionView.delegate = self
         cell.collectionView.dataSource = self
@@ -65,7 +132,7 @@ extension TrendViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension TrendViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return imageList[collectionView.tag].count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -73,7 +140,8 @@ extension TrendViewController: UICollectionViewDelegate, UICollectionViewDataSou
             return UICollectionViewCell()
         }
 
-        cell.configureData()
+        let data = imageList[collectionView.tag][indexPath.item]
+        cell.configureData(photo: data)
         return cell
     }
 }
