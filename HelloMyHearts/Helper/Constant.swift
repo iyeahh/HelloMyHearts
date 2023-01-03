@@ -43,17 +43,6 @@ enum Constant {
         }
     }
 
-    enum API {
-        enum param {
-            static let query = "query"
-            static let page = "page"
-            static let perPage = "per_page"
-            static let perPageValue = 20
-            static let sort = "order_by"
-            static let key = "client_id"
-        }
-    }
-
     enum Image {
         static let launch = UIImage(named: "launchImage")
 
@@ -113,12 +102,6 @@ enum Constant {
             static let f = "F"
             static let j = "J"
             static let p = "P"
-        }
-
-        enum Topic {
-            static let goldenHour = "골든 아워"
-            static let business = "비즈니스 및 업무"
-            static let interior = "건축 및 인테리어"
         }
 
         enum Search {

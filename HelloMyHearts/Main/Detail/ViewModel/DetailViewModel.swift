@@ -22,7 +22,7 @@ final class DetailViewModel {
     private func transform() {
         inputViewDidLoad.bind { [weak self] value in
             guard let self,
-                  let value,
+                  value != nil,
             let photo else { return }
             outputLikeToggle.value = LikeTabelRepository.shared.checkIsLike(id: photo.id)
 
@@ -52,8 +52,7 @@ final class DetailViewModel {
     private func fetchPhotoData(completion: @escaping (PhotoData) -> Void) {
         guard let photo else { return }
 
-        APIService.shared.fetchPhotoData(id: photo.id) { [weak self] response in
-            guard let self else { return }
+        APIService.shared.callRequest(api: .fetchPhotoData(id: photo.id)) { (response: Result<PhotoData, Error>) in
             switch response {
             case .success(let success):
                 completion(success)

@@ -53,47 +53,19 @@ final class TrendViewController: BaseViewController {
     private func callRequest() {
         let group = DispatchGroup()
 
-        group.enter()
-        DispatchQueue.global().async(group: group) {
-            APIService.shared.fetchTopicPhoto(topic: "golden-hour") { [weak self] response in
-                guard let self else { return }
-                switch response {
-                case .success(let success):
-                    imageList[0] = success
-                case .failure(let failure):
-                    print(failure)
+        Topic.allCases.forEach { topic in
+            group.enter()
+            DispatchQueue.global().async(group: group) {
+                APIService.shared.callRequest(api: .fetchTopicPhoto(topic: topic)) { [weak self] (response: Result<[TopicPhoto], Error>) in
+                    guard let self else { return }
+                    switch response {
+                    case .success(let success):
+                        imageList[topic.rawValue] = success
+                    case .failure(let failure):
+                        print(failure)
+                    }
+                    group.leave()
                 }
-                group.leave()
-            }
-        }
-
-        group.enter()
-        DispatchQueue.global().async(group: group) {
-            APIService.shared.fetchTopicPhoto(topic: "business-work") { [weak self] response in
-                guard let self else { return }
-                switch response {
-                case .success(let success):
-                    print(success)
-                    imageList[1] = success
-                case .failure(let failure):
-                    print(failure)
-                }
-                group.leave()
-            }
-        }
-
-        group.enter()
-        DispatchQueue.global().async(group: group) {
-            APIService.shared.fetchTopicPhoto(topic: "architecture-interior") { [weak self] response in
-                guard let self else { return }
-                switch response {
-                case .success(let success):
-                    print(success)
-                    imageList[2] = success
-                case .failure(let failure):
-                    print(failure)
-                }
-                group.leave()
             }
         }
 
@@ -113,11 +85,9 @@ extension TrendViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TrendTableViewCell.identifier, for: indexPath) as? TrendTableViewCell else {
             return UITableViewCell()
         }
-        let title = [
-            Constant.LiteralString.Topic.goldenHour,
-            Constant.LiteralString.Topic.business,
-            Constant.LiteralString.Topic.interior
-        ]
+        let title = Topic.allCases.map { topic in
+            topic.title
+        }
 
         cell.setTitle(title[indexPath.row])
 

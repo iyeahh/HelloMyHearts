@@ -122,10 +122,10 @@ extension SearchViewController {
     }
 
     private func callRequest() {
-        APIService.shared.searchPhoto(query: searchPhoto.searhWord, page: searchPhoto.page, sort: searchPhoto.sortValue) { [weak self] value in
+        APIService.shared.callRequest(api: .search(query: searchPhoto.searhWord, page: searchPhoto.page, sort: searchPhoto.sortValue)) { [weak self] (response: Result<ResultPhoto, Error>) in
             guard let self else { return }
 
-            switch value {
+            switch response {
             case .success(let success):
                 guard !success.results.isEmpty else {
                     collectionView.isHidden = true
@@ -145,7 +145,7 @@ extension SearchViewController {
                 if searchPhoto.page == success.total_pages {
                     searchPhoto.isEnd = true
                 }
-                
+
                 collectionView.reloadData()
                 if searchPhoto.page == 1 {
                     collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
@@ -161,7 +161,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return searchPhoto.photoList.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as? PhotoCollectionViewCell else {
             return UICollectionViewCell()

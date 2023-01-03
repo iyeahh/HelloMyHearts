@@ -13,55 +13,11 @@ final class APIService {
 
     private init() {}
 
-    func searchPhoto(query: String, page: Int, sort: Sort, completion: @escaping (Result<ResultPhoto, Error>) -> Void) {
-        let param: Parameters = [
-            Constant.API.param.query: query,
-            Constant.API.param.page: page,
-            Constant.API.param.perPage: Constant.API.param.perPageValue,
-            Constant.API.param.sort: sort.rawValue,
-            Constant.API.param.key: APIKey.apiKey
-        ]
+    func callRequest<T: Decodable>(api: URLComponent, completion: @escaping (Result<T, Error>) -> Void) {
 
-        AF.request(BaseURL.search,
-                   parameters: param
-        )
-        .responseDecodable(of: ResultPhoto.self) { response in
-            switch response.result {
-            case .success(let value):
-                completion(.success(value))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
-
-    func fetchPhotoData(id: String, completion: @escaping (Result<PhotoData, Error>) -> Void) {
-        let param: Parameters = [
-            Constant.API.param.key: APIKey.apiKey
-        ]
-
-        AF.request("https://api.unsplash.com/photos/\(id)/statistics?",
-                   parameters: param
-        )
-        .responseDecodable(of: PhotoData.self) { response in
-            switch response.result {
-            case .success(let value):
-                completion(.success(value))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
-
-    func fetchTopicPhoto(topic: String, completion: @escaping (Result<[TopicPhoto], Error>) -> Void) {
-        let param: Parameters = [
-            Constant.API.param.key: APIKey.apiKey
-        ]
-
-        AF.request("https://api.unsplash.com/topics/\(topic)/photos?",
-                   parameters: param
-        )
-        .responseDecodable(of: [TopicPhoto].self) { response in
+        AF.request(api.url,
+                   parameters: api.parameters)
+        .responseDecodable(of: T.self) { response in
             switch response.result {
             case .success(let value):
                 completion(.success(value))
