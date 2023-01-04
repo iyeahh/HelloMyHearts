@@ -22,25 +22,12 @@ enum Constant {
     enum Font {
         static let system10: UIFont = .systemFont(ofSize: 10)
         static let system13: UIFont = .systemFont(ofSize: 13)
+        static let system14: UIFont = .systemFont(ofSize: 14)
         static let bold11: UIFont = .boldSystemFont(ofSize: 11)
         static let bold15: UIFont = .boldSystemFont(ofSize: 15)
         static let bold17: UIFont = .boldSystemFont(ofSize: 17)
         static let bold19: UIFont = .boldSystemFont(ofSize: 19)
         static let bold32: UIFont = .boldSystemFont(ofSize: 32)
-    }
-
-    enum Charactor {
-        case isSelected
-        case unSelected
-
-        var borderSetting: (borderWidth: CGFloat, alpha: CGFloat) {
-            switch self {
-            case .isSelected:
-                return (3, 1)
-            case .unSelected:
-                return (1, 0.5)
-            }
-        }
     }
 
     enum Image {
@@ -125,5 +112,6 @@ enum Constant {
     enum LiteralNumber {
         static let cornerRadius: CGFloat = 12
         static let toastDuration = 1.0
+        static let border: CGFloat = 5
     }
 }

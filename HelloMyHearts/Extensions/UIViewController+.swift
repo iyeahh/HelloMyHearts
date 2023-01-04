@@ -14,4 +14,16 @@ extension UIViewController {
         navigationItem.backBarButtonItem = backBarButtonItem
         navigationController?.pushViewController(vc, animated: true)
     }
+
+    func moveNextVCWithWindow(needNavi: Bool, vc: UIViewController) {
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        let sceneDelegate = windowScene?.delegate as? SceneDelegate
+        if needNavi {
+            let rootVC = UINavigationController(rootViewController: vc)
+            sceneDelegate?.window?.rootViewController = rootVC
+        } else {
+            sceneDelegate?.window?.rootViewController = vc
+        }
+        sceneDelegate?.window?.makeKeyAndVisible()
+    }
 }
