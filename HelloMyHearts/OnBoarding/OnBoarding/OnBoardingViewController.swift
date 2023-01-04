@@ -57,7 +57,7 @@ final class OnBoardingViewController: BaseViewController {
     }
 
     @objc private func startButtonTapped() {
-        let setNicknameVC = SetNicknameViewConroller(state: .edit)
+        let setNicknameVC = SetNicknameViewConroller(state: .create)
         moveNextVC(vc: setNicknameVC)
     }
 }

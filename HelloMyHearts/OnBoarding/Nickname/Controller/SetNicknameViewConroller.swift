@@ -75,11 +75,17 @@ final class SetNicknameViewConroller: BaseViewController {
         return label
     }()
 
+    private let mbtiLabel = Bold15FontLabel(title: MBTI.mbti)
+
+    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
+
     private let completeButton = {
         let button = AccentColorButton(title: Constant.LiteralString.Title.Button.complete)
         button.addTarget(nil, action: #selector(completeButtonTapped), for: .touchUpInside)
         return button
     }()
+
+    var mbti: [Bool?] = [nil, nil, nil, nil]
 
     init(state: State) {
         viewModel = OnBoardingViewModel(state: state)
@@ -93,6 +99,7 @@ final class SetNicknameViewConroller: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureCollectionView()
         nicknameTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
 
         if state == .edit {
@@ -115,6 +122,17 @@ final class SetNicknameViewConroller: BaseViewController {
         cameraCircleImageView.layer.cornerRadius = cameraCircleImageView.frame.width / 2
     }
 
+    private func collectionViewLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 5
+        layout.minimumInteritemSpacing = 5
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layout.scrollDirection = .vertical
+        let width = (UIScreen.main.bounds.width * 0.5) / 4
+        layout.itemSize = CGSize(width: width, height: width)
+        return layout
+    }
+
     override func configureNavi() {
         if viewModel.state == .create {
             navigationItem.title = State.create.rawValue
@@ -129,7 +147,7 @@ final class SetNicknameViewConroller: BaseViewController {
     }
 
     override func configureHierarchy() {
-        [naviBarView, profileImageView, setImageButton, cameraBackImageView, cameraCircleImageView, nicknameTextField, barView, descriptionLabel, completeButton].forEach { view.addSubview($0) }
+        [naviBarView, profileImageView, setImageButton, cameraBackImageView, cameraCircleImageView, nicknameTextField, barView, descriptionLabel, mbtiLabel, collectionView, completeButton].forEach { view.addSubview($0) }
     }
 
     override func configureLayout() {
@@ -177,11 +195,28 @@ final class SetNicknameViewConroller: BaseViewController {
             make.top.equalTo(barView.snp.bottom).offset(10)
         }
 
+        mbtiLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(30)
+            make.top.equalTo(descriptionLabel.snp.bottom).offset(50)
+        }
+
         completeButton.snp.makeConstraints { make in
-            make.horizontalEdges.equalToSuperview().inset(30)
-            make.top.equalTo(descriptionLabel.snp.bottom).offset(30)
+            make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide).inset(30)
             make.height.equalTo(40)
         }
+
+        collectionView.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(30)
+            make.top.equalTo(descriptionLabel.snp.bottom).offset(50)
+            make.leading.equalTo(mbtiLabel.snp.trailing).offset(80)
+            make.bottom.equalTo(completeButton.snp.top)
+        }
+    }
+
+    private func configureCollectionView() {
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(SetMbtiCollectionViewCell.self, forCellWithReuseIdentifier: SetMbtiCollectionViewCell.identifier)
     }
 }
 
@@ -204,5 +239,54 @@ extension SetNicknameViewConroller {
     }
     @objc private func saveButtonTapped() {
         viewModel.inputSaveButtonTapped.value = ()
+    }
+}
+
+extension SetNicknameViewConroller: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return MBTI.mbtiList.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SetMbtiCollectionViewCell.identifier, for: indexPath) as? SetMbtiCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        let title = MBTI.mbtiList[indexPath.item]
+
+        var index = 0
+
+        if indexPath.item > 3 {
+            let index = indexPath.item - 4
+            if let value = mbti[index] {
+                if !value {
+                    cell.configureData(title: title, type: .isSelected)
+                } else {
+                    cell.configureData(title: title, type: .unSelected)
+                }
+            } else {
+                cell.configureData(title: title, type: .unSelected)
+            }
+        } else {
+            if let value = mbti[indexPath.item] {
+                if value {
+                    cell.configureData(title: title, type: .isSelected)
+                } else {
+                    cell.configureData(title: title, type: .unSelected)
+                }
+            } else {
+                cell.configureData(title: title, type: .unSelected)
+            }
+        }
+        return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.item > 3 {
+            let index = indexPath.item - 4
+            mbti[index] = false
+        } else {
+            mbti[indexPath.item] = true
+        }
+        collectionView.reloadData()
     }
 }

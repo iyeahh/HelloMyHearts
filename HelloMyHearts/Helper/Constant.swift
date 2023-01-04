@@ -79,18 +79,6 @@ enum Constant {
             }
         }
 
-        enum MBTI {
-            static let mbti = "MBTI"
-            static let e = "E"
-            static let i = "I"
-            static let s = "S"
-            static let n = "N"
-            static let t = "T"
-            static let f = "F"
-            static let j = "J"
-            static let p = "P"
-        }
-
         enum Search {
             static let placeholder = "키워드 검색"
 
@@ -110,7 +98,8 @@ enum Constant {
     }
 
     enum LiteralNumber {
-        static let cornerRadius: CGFloat = 12
+        static let cornerRadius12: CGFloat = 12
+        static let cornerRadius20: CGFloat = 20
         static let toastDuration = 1.0
         static let border: CGFloat = 5
     }
