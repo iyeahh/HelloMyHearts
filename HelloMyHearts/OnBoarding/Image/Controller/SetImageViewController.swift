@@ -10,13 +10,6 @@ import UIKit
 final class SetImageViewController: BaseViewController {
     var viewModel: OnBoardingViewModel
 
-    var selectedimage = 0 {
-        didSet {
-            profileImageView.image = UIImage.getProfileImage(selectedimage)
-            imageCollectionView.reloadData()
-        }
-    }
-
     private let barView = BarView()
 
     private let profileImageView = ProfileImageView()
@@ -49,7 +42,6 @@ final class SetImageViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        selectedimage = viewModel.outputImage.value
         configureCollectionView()
         bindData()
     }
@@ -125,7 +117,8 @@ final class SetImageViewController: BaseViewController {
     private func bindData() {
         viewModel.outputImage.bind { [weak self] value in
             guard let self else { return }
-            selectedimage = value
+            profileImageView.image = UIImage.getProfileImage(value)
+            imageCollectionView.reloadData()
         }
     }
 }
@@ -141,7 +134,7 @@ extension SetImageViewController: UICollectionViewDelegate, UICollectionViewData
             return UICollectionViewCell()
         }
         let image = viewModel.imageList[indexPath.item]
-        if image == selectedimage {
+        if image == viewModel.outputImage.value {
             cell.configureImage(image, type: .isSelected)
         } else {
             cell.configureImage(image, type: .unSelected)

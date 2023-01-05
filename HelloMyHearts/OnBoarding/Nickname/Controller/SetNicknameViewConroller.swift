@@ -11,26 +11,6 @@ import SnapKit
 final class SetNicknameViewConroller: BaseViewController {
     let viewModel: OnBoardingViewModel
 
-    var state: State
-
-    var nickname: String? {
-        didSet {
-            nicknameTextField.text = nickname
-        }
-    }
-
-    var profileImage = 0 {
-        didSet {
-            profileImageView.image = UIImage.getProfileImage(profileImage)
-        }
-    }
-
-    var descriptionContent = "" {
-        didSet {
-            descriptionLabel.text = descriptionContent
-        }
-    }
-
     private let naviBarView = BarView()
 
     private let profileImageView = ProfileImageView()
@@ -85,11 +65,8 @@ final class SetNicknameViewConroller: BaseViewController {
         return button
     }()
 
-    var mbti: [Bool?] = [nil, nil, nil, nil]
-
     init(state: State) {
         viewModel = OnBoardingViewModel(state: state)
-        self.state = state
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -102,16 +79,18 @@ final class SetNicknameViewConroller: BaseViewController {
         configureCollectionView()
         nicknameTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
 
-        if state == .edit {
+        if viewModel.state == .edit {
             completeButton.isHidden = true
         }
+
+        bindData()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         viewModel.inputSetImage.value = ()
-        viewModel.outputImage.bind { [weak self] image in
+        viewModel.outputImage.bind { [weak self] value in
             guard let self else { return }
-            profileImage = image
+            profileImageView.image = UIImage.getProfileImage(value)
         }
     }
 
@@ -221,6 +200,34 @@ final class SetNicknameViewConroller: BaseViewController {
 }
 
 extension SetNicknameViewConroller {
+    private func bindData() {
+        viewModel.outputMbti.bind { [weak self] _ in
+            guard let self else { return }
+            collectionView.reloadData() }
+
+        viewModel.outputNickname.bind { [weak self] value in
+            guard let self else { return }
+            nicknameTextField.text = value
+        }
+
+        viewModel.outputDescription.bind { [weak self] value in
+            guard let self else { return }
+            descriptionLabel.text = value
+        }
+
+        viewModel.outputConfirmButtonStatus.bind { [weak self] value in
+            guard let self else { return }
+
+            if value {
+                completeButton.backgroundColor = Constant.Color.accent
+                completeButton.isEnabled = value
+            } else {
+                completeButton.backgroundColor = Constant.Color.secondaryGray
+                completeButton.isEnabled = value
+            }
+        }
+    }
+
     @objc private func setImageButtonTapped() {
         let setImageVC = SetImageViewController(viewModel: viewModel)
         moveNextVC(vc: setImageVC)
@@ -253,11 +260,9 @@ extension SetNicknameViewConroller: UICollectionViewDelegate, UICollectionViewDa
         }
         let title = MBTI.mbtiList[indexPath.item]
 
-        var index = 0
-
         if indexPath.item > 3 {
             let index = indexPath.item - 4
-            if let value = mbti[index] {
+            if let value = viewModel.outputMbti.value[index] {
                 if !value {
                     cell.configureData(title: title, type: .isSelected)
                 } else {
@@ -267,7 +272,7 @@ extension SetNicknameViewConroller: UICollectionViewDelegate, UICollectionViewDa
                 cell.configureData(title: title, type: .unSelected)
             }
         } else {
-            if let value = mbti[indexPath.item] {
+            if let value = viewModel.outputMbti.value[indexPath.item] {
                 if value {
                     cell.configureData(title: title, type: .isSelected)
                 } else {
@@ -283,10 +288,11 @@ extension SetNicknameViewConroller: UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.item > 3 {
             let index = indexPath.item - 4
-            mbti[index] = false
+            viewModel.outputMbti.value[index] = false
         } else {
-            mbti[indexPath.item] = true
+            viewModel.outputMbti.value[indexPath.item] = true
         }
+        viewModel.inputDidSelectCell.value = ()
         collectionView.reloadData()
     }
 }

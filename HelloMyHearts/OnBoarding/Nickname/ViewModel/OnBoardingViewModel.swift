@@ -23,25 +23,29 @@ final class OnBoardingViewModel {
     var inputImageSelected = Observable(0)
     var inputSaveButtonTapped: Observable<Void?> = Observable(nil)
     var inputSetImage: Observable<Void?> = Observable(nil)
+    var inputDidSelectCell: Observable<Void?> = Observable(nil)
 
     var outputDescription = Observable("")
     var outputImage = Observable(0)
     var outputNickname = Observable("")
     var outputValidCreate = Observable(true)
     var outputValidEdit = Observable(true)
+    var outputMbti: Observable<[Bool?]> = Observable([nil, nil, nil, nil])
+    var outputConfirmButtonStatus = Observable(false)
 
     init(state: State) {
         self.state = state
         inputNicknameTextField.bind { [weak self] value in
             guard let value,
                   let self else { return }
-            self.determineNickname()
-            self.outputNickname.value = value
+            determineNickname()
+            outputNickname.value = value
+            outputConfirmButtonStatus.value = isPossible()
         }
 
         inputCompleteButtonTapped.bind { [weak self] _ in
             guard let self else { return }
-            self.completeButtonTapped()
+            completeButtonTapped()
         }
 
         inputImageSelected.bind { [weak self] value in
@@ -52,16 +56,22 @@ final class OnBoardingViewModel {
 
         inputSaveButtonTapped.bind { [weak self] _ in
             guard let self else { return }
-            self.saveButtonTapped()
+            saveButtonTapped()
         }
 
         inputSetImage.bind { [weak self] _ in
             guard let self else { return }
-            self.setImage()
+            setImage()
             if state == .edit {
                 guard let nickname = UserDefaultsManager.shared.getValue(key: .nickname) else { return }
-                self.outputNickname.value = nickname
+                outputNickname.value = nickname
             }
+        }
+
+        inputDidSelectCell.bind { [weak self] value in
+            guard let self,
+                  value != nil else { return }
+            outputConfirmButtonStatus.value = isPossible()
         }
     }
 
@@ -71,7 +81,7 @@ final class OnBoardingViewModel {
             outputValidEdit.value = false
             return
         }
-        UserDefaultsManager.shared.createUserInfo(nickname: outputNickname.value, image: String(outputImage.value))
+        UserDefaultsManager.shared.createUserInfo(nickname: outputNickname.value, image: String(outputImage.value), inputMbti: outputMbti.value)
         outputValidEdit.value = true
     }
 
@@ -80,15 +90,14 @@ final class OnBoardingViewModel {
             outputValidCreate.value = false
             return
         }
-        UserDefaultsManager.shared.createUserInfo(nickname: outputNickname.value, image: String(outputImage.value))
+        UserDefaultsManager.shared.createUserInfo(nickname: outputNickname.value, image: String(outputImage.value), inputMbti: outputMbti.value)
         outputValidCreate.value = true
     }
 
     private func isPossible() -> Bool {
-        guard inputNicknameTextField.value != nil else { return false }
-        guard outputDescription.value == Constant.LiteralString.Nickname.possible else {
-            return false
-        }
+        guard inputNicknameTextField.value != nil,
+              outputDescription.value == Constant.LiteralString.Nickname.possible,
+              outputMbti.value.compactMap({ $0 }).count == 4 else { return false }
         return true
     }
 

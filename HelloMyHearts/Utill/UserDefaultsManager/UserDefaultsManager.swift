@@ -26,6 +26,16 @@ final class UserDefaultsManager {
     func getValue(key: UserDefultsKey) -> String? {
         UserDefaults.standard.string(forKey: key.rawValue)
     }
+
+    var mbti: [Bool]? {
+        get {
+            UserDefaults.standard.array(forKey: UserDefultsKey.mbti.rawValue) as? [Bool]
+        }
+
+        set {
+            UserDefaults.standard.set(newValue, forKey: UserDefultsKey.mbti.rawValue)
+        }
+    }
 }
 
 extension UserDefaultsManager {
@@ -38,7 +48,7 @@ extension UserDefaultsManager {
     func getUserInfo() -> UserInfo? {
         guard let image = getValue(key: .image),
               let nickname = getValue(key: .nickname),
-              let mbti = getValue(key: .mbti) else { return nil }
+              let mbti = mbti else { return nil }
 
         return UserInfo(image: image, nickname: nickname, mbti: mbti)
     }
@@ -48,11 +58,12 @@ extension UserDefaultsManager {
         return true
     }
 
-    func createUserInfo(nickname: String?, image: String) {
+    func createUserInfo(nickname: String?, image: String, inputMbti: [Bool?]) {
         guard let nickname else { return }
 
         setValue(key: .nickname, nickname)
         setValue(key: .image, image)
+        mbti = inputMbti.compactMap { $0 }
         remove(.tempImage)
     }
 

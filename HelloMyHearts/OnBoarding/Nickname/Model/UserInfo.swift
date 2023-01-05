@@ -10,5 +10,5 @@ import Foundation
 struct UserInfo {
     var image = ""
     var nickname = ""
-    var mbti = ""
+    var mbti: [Bool] = []
 }
