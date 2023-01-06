@@ -226,6 +226,11 @@ extension SetNicknameViewConroller {
                 completeButton.isEnabled = value
             }
         }
+
+        viewModel.outputLabelColor.bind { [weak self] value in
+            guard let self else { return }
+            descriptionLabel.textColor = value ? Constant.Color.accent : Constant.Color.warning
+        }
     }
 
     @objc private func setImageButtonTapped() {

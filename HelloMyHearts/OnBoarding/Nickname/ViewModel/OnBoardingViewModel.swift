@@ -13,6 +13,7 @@ final class OnBoardingViewModel {
         case containNumber
         case whiteSpace
         case containSymbol
+        case empty
     }
 
     let imageList: [Int] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
@@ -26,6 +27,7 @@ final class OnBoardingViewModel {
     var inputDidSelectCell: Observable<Void?> = Observable(nil)
 
     var outputDescription = Observable("")
+    var outputLabelColor = Observable(false)
     var outputImage = Observable(0)
     var outputNickname = Observable("")
     var outputValidCreate = Observable(true)
@@ -102,11 +104,12 @@ final class OnBoardingViewModel {
     }
 
     private func validUserInput() throws -> Void {
-        guard let text = inputNicknameTextField.value else {
-            throw NicknameError.whiteSpace
+        guard let text = inputNicknameTextField.value,
+              !text.isEmpty else {
+            throw NicknameError.empty
         }
 
-        guard !text.isEmpty && !text.contains(" ") else {
+        guard !text.contains(" ") else {
             throw NicknameError.whiteSpace
         }
 
@@ -133,14 +136,21 @@ final class OnBoardingViewModel {
         do {
             try validUserInput()
             outputDescription.value = Constant.LiteralString.Nickname.possible
+            outputLabelColor.value = true
+        } catch NicknameError.empty {
+            outputDescription.value = ""
         } catch NicknameError.containNumber {
             outputDescription.value = Constant.LiteralString.Nickname.containNumber
+            outputLabelColor.value = false
         } catch NicknameError.containSymbol {
             outputDescription.value = Constant.LiteralString.Nickname.containSymbol
+            outputLabelColor.value = false
         } catch NicknameError.incorrectNumber {
             outputDescription.value = Constant.LiteralString.Nickname.incorrectNumber
+            outputLabelColor.value = false
         } catch NicknameError.whiteSpace {
             outputDescription.value = Constant.LiteralString.Nickname.whiteSpace
+            outputLabelColor.value = false
         } catch {
             outputDescription.value = "닉네임 양식에 맞지 않음"
         }
