@@ -65,6 +65,16 @@ final class SetNicknameViewConroller: BaseViewController {
         return button
     }()
 
+    private let cancelMembershipButton = {
+        let button = UIButton()
+        button.setTitle(Constant.LiteralString.Title.Button.cancelMembership, for: .normal)
+        button.setTitleColor(Constant.Color.accent, for: .normal)
+        button.titleLabel?.font = Constant.Font.bold13
+        button.setUnderline()
+        button.addTarget(nil, action: #selector(cancelMembershipButtonTapped), for: .touchUpInside)
+        return button
+    }()
+
     init(state: State) {
         viewModel = OnBoardingViewModel(state: state)
         super.init(nibName: nil, bundle: nil)
@@ -81,13 +91,15 @@ final class SetNicknameViewConroller: BaseViewController {
 
         if viewModel.state == .edit {
             completeButton.isHidden = true
+        } else {
+            cancelMembershipButton.isHidden = true
         }
 
         bindData()
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        viewModel.inputSetImage.value = ()
+        viewModel.inputViewWillAppear.value = ()
         viewModel.outputImage.bind { [weak self] value in
             guard let self else { return }
             profileImageView.image = UIImage.getProfileImage(value)
@@ -113,6 +125,8 @@ final class SetNicknameViewConroller: BaseViewController {
     }
 
     override func configureNavi() {
+        navigationController?.navigationBar.isHidden = false
+
         if viewModel.state == .create {
             navigationItem.title = State.create.rawValue
             UserDefaultsManager.shared.remove(.tempImage)
@@ -126,7 +140,7 @@ final class SetNicknameViewConroller: BaseViewController {
     }
 
     override func configureHierarchy() {
-        [naviBarView, profileImageView, setImageButton, cameraBackImageView, cameraCircleImageView, nicknameTextField, barView, descriptionLabel, mbtiLabel, collectionView, completeButton].forEach { view.addSubview($0) }
+        [naviBarView, profileImageView, setImageButton, cameraBackImageView, cameraCircleImageView, nicknameTextField, barView, descriptionLabel, mbtiLabel, collectionView, completeButton, cancelMembershipButton].forEach { view.addSubview($0) }
     }
 
     override func configureLayout() {
@@ -190,6 +204,11 @@ final class SetNicknameViewConroller: BaseViewController {
             make.leading.equalTo(mbtiLabel.snp.trailing).offset(80)
             make.bottom.equalTo(completeButton.snp.top)
         }
+
+        cancelMembershipButton.snp.makeConstraints { make in
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(10)
+            make.horizontalEdges.equalToSuperview()
+        }
     }
 
     private func configureCollectionView() {
@@ -203,7 +222,8 @@ extension SetNicknameViewConroller {
     private func bindData() {
         viewModel.outputMbti.bind { [weak self] _ in
             guard let self else { return }
-            collectionView.reloadData() }
+            collectionView.reloadData()
+        }
 
         viewModel.outputNickname.bind { [weak self] value in
             guard let self else { return }
@@ -218,18 +238,36 @@ extension SetNicknameViewConroller {
         viewModel.outputConfirmButtonStatus.bind { [weak self] value in
             guard let self else { return }
 
-            if value {
-                completeButton.backgroundColor = Constant.Color.accent
-                completeButton.isEnabled = value
-            } else {
-                completeButton.backgroundColor = Constant.Color.secondaryGray
-                completeButton.isEnabled = value
-            }
+            completeButton.backgroundColor = value ? Constant.Color.accent : Constant.Color.secondaryGray
+            navigationItem.rightBarButtonItem?.tintColor = value ? Constant.Color.accent : Constant.Color.secondaryGray
+            completeButton.isEnabled = value
+            navigationItem.rightBarButtonItem?.isEnabled = value
         }
 
         viewModel.outputLabelColor.bind { [weak self] value in
             guard let self else { return }
+
             descriptionLabel.textColor = value ? Constant.Color.accent : Constant.Color.warning
+        }
+
+        viewModel.outputValidEdit.bind { [weak self] value in
+            guard let self else { return }
+            if value {
+                navigationController?.popViewController(animated: true)
+            }
+        }
+
+        viewModel.outputValidCreate.bind { [weak self] value in
+            guard let self else { return }
+            if value {
+                let rootView = TabBarViewController()
+                moveNextVCWithWindow(needNavi: false, vc: rootView)
+            }
+        }
+
+        viewModel.outputExistTabbar.bind { [weak self] value in
+            guard let self else { return }
+            tabBarController?.tabBar.isHidden = !value
         }
     }
 
@@ -244,13 +282,22 @@ extension SetNicknameViewConroller {
 
     @objc private func completeButtonTapped() {
         viewModel.inputCompleteButtonTapped.value = ()
-        if viewModel.outputValidCreate.value {
-            let rootView = TabBarViewController()
-            moveNextVCWithWindow(needNavi: false, vc: rootView)
-        }
     }
+
     @objc private func saveButtonTapped() {
         viewModel.inputSaveButtonTapped.value = ()
+    }
+
+    @objc private func cancelMembershipButtonTapped() {
+        let alert = makeAlert(confirmButtonTapped: confirmButtonTapped)
+        present(alert, animated: true)
+    }
+
+    private func confirmButtonTapped() {
+        viewModel.inputConfirmButtonTapped.value = ()
+
+        let onBoardingVC = OnBoardingViewController()
+        moveNextVCWithWindow(needNavi: true, vc: onBoardingVC)
     }
 }
 

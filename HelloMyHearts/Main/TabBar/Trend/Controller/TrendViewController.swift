@@ -9,6 +9,18 @@ import UIKit
 import SnapKit
 
 final class TrendViewController: BaseViewController {
+    private let profileImageView = {
+        let imageView = ProfileImageView()
+        imageView.layer.borderWidth = 3
+        return imageView
+    }()
+
+    private lazy var profileButton = {
+        let button = UIButton()
+        button.addTarget(self, action: #selector(profileButtonTapped), for: .touchUpInside)
+        return button
+    }()
+
     private let largeTitleLabel = {
         let label = UILabel()
         label.text = TabBar.trend.rawValue
@@ -33,15 +45,38 @@ final class TrendViewController: BaseViewController {
         callRequest()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        setProfileImageView()
+        navigationController?.navigationBar.isHidden = true
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        profileImageView.layer.masksToBounds = true
+        profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
+    }
+
     override func configureHierarchy() {
+        view.addSubview(profileImageView)
+        view.addSubview(profileButton)
         view.addSubview(largeTitleLabel)
         view.addSubview(tableView)
     }
 
     override func configureLayout() {
+        profileImageView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.trailing.equalToSuperview().inset(10)
+            make.size.equalTo(40)
+        }
+
+        profileButton.snp.makeConstraints { make in
+            make.edges.equalTo(profileImageView)
+        }
+
         largeTitleLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(20)
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(50)
         }
 
         tableView.snp.makeConstraints { make in
@@ -73,6 +108,18 @@ final class TrendViewController: BaseViewController {
             guard let self else { return }
             tableView.reloadData()
         }
+    }
+
+    func setProfileImageView() {
+        if let image = UserDefaultsManager.shared.getValue(key: .image),
+           let intImage = Int(image) {
+            profileImageView.image = UIImage.getProfileImage(intImage)
+        }
+    }
+
+    @objc private func profileButtonTapped() {
+        let editProfileVC = SetNicknameViewConroller(state: .edit)
+        moveNextVC(vc: editProfileVC)
     }
 }
 

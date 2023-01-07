@@ -68,6 +68,7 @@
 		76B50D092C553F4F00E79B57 /* ProfileImageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B50D082C553F4F00E79B57 /* ProfileImageType.swift */; };
 		76B50D0C2C55536500E79B57 /* SetMbtiCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B50D0B2C55536500E79B57 /* SetMbtiCollectionViewCell.swift */; };
 		76B50D0E2C555A2100E79B57 /* MBTI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B50D0D2C555A2100E79B57 /* MBTI.swift */; };
+		76B50D102C55A0A000E79B57 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B50D0F2C55A0A000E79B57 /* UIButton+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -129,6 +130,7 @@
 		76B50D082C553F4F00E79B57 /* ProfileImageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageType.swift; sourceTree = "<group>"; };
 		76B50D0B2C55536500E79B57 /* SetMbtiCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetMbtiCollectionViewCell.swift; sourceTree = "<group>"; };
 		76B50D0D2C555A2100E79B57 /* MBTI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBTI.swift; sourceTree = "<group>"; };
+		76B50D0F2C55A0A000E79B57 /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				764168162C4E340C00C8845C /* Constant.swift */,
+				765DB63D2C53767500AF1515 /* Observable.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -199,6 +202,7 @@
 				764168472C4E632600C8845C /* UIView+.swift */,
 				765DB6222C5286BC00AF1515 /* UIViewController+.swift */,
 				76B50CF02C55248200E79B57 /* UIImage+.swift */,
+				76B50D0F2C55A0A000E79B57 /* UIButton+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -335,7 +339,6 @@
 			children = (
 				76B50D002C552E1A00E79B57 /* UserDefaultsManager */,
 				765DB63F2C5379A900AF1515 /* Documnet */,
-				765DB63C2C53766A00AF1515 /* Observable */,
 				765DB6362C536EB100AF1515 /* Formatter */,
 				7641683F2C4E5D6E00C8845C /* API */,
 				765DB6182C5281E100AF1515 /* Realm */,
@@ -399,14 +402,6 @@
 				765DB63A2C53766100AF1515 /* DetailViewModel.swift */,
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		765DB63C2C53766A00AF1515 /* Observable */ = {
-			isa = PBXGroup;
-			children = (
-				765DB63D2C53767500AF1515 /* Observable.swift */,
-			);
-			path = Observable;
 			sourceTree = "<group>";
 		};
 		765DB63F2C5379A900AF1515 /* Documnet */ = {
@@ -671,6 +666,7 @@
 				7641683E2C4E5B3300C8845C /* BarView.swift in Sources */,
 				764168202C4E426100C8845C /* TabBarViewController.swift in Sources */,
 				76B50D062C5532A700E79B57 /* UserInfo.swift in Sources */,
+				76B50D102C55A0A000E79B57 /* UIButton+.swift in Sources */,
 				76B50CFD2C5529AA00E79B57 /* AccentColorButton.swift in Sources */,
 				764168262C4E434400C8845C /* TrendViewController.swift in Sources */,
 				765DB6522C54F96700AF1515 /* Topic.swift in Sources */,

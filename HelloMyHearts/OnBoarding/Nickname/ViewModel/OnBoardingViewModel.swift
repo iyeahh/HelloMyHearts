@@ -23,20 +23,26 @@ final class OnBoardingViewModel {
     var inputCompleteButtonTapped: Observable<Void?> = Observable(nil)
     var inputImageSelected = Observable(0)
     var inputSaveButtonTapped: Observable<Void?> = Observable(nil)
-    var inputSetImage: Observable<Void?> = Observable(nil)
+    var inputViewWillAppear: Observable<Void?> = Observable(nil)
     var inputDidSelectCell: Observable<Void?> = Observable(nil)
+    var inputConfirmButtonTapped: Observable<Void?> = Observable(nil)
 
     var outputDescription = Observable("")
-    var outputLabelColor = Observable(false)
+    var outputLabelColor =  Observable(false)
     var outputImage = Observable(0)
     var outputNickname = Observable("")
     var outputValidCreate = Observable(true)
     var outputValidEdit = Observable(true)
     var outputMbti: Observable<[Bool?]> = Observable([nil, nil, nil, nil])
     var outputConfirmButtonStatus = Observable(false)
+    var outputExistTabbar = Observable(true)
 
     init(state: State) {
         self.state = state
+        transform()
+    }
+
+    private func transform() {
         inputNicknameTextField.bind { [weak self] value in
             guard let value,
                   let self else { return }
@@ -61,12 +67,16 @@ final class OnBoardingViewModel {
             saveButtonTapped()
         }
 
-        inputSetImage.bind { [weak self] _ in
+        inputViewWillAppear.bind { [weak self] _ in
             guard let self else { return }
             setImage()
             if state == .edit {
-                guard let nickname = UserDefaultsManager.shared.getValue(key: .nickname) else { return }
+                guard let nickname = UserDefaultsManager.shared.getValue(key: .nickname),
+                      let mbti = UserDefaultsManager.shared.mbti else { return }
                 outputNickname.value = nickname
+                inputNicknameTextField.value = nickname
+                outputMbti.value = mbti
+                outputExistTabbar.value = false
             }
         }
 
@@ -74,6 +84,11 @@ final class OnBoardingViewModel {
             guard let self,
                   value != nil else { return }
             outputConfirmButtonStatus.value = isPossible()
+        }
+
+        inputConfirmButtonTapped.bind { value in
+            guard value != nil else { return }
+            UserDefaultsManager.shared.removeAll()
         }
     }
 

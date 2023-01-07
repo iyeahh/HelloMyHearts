@@ -26,4 +26,28 @@ extension UIViewController {
         }
         sceneDelegate?.window?.makeKeyAndVisible()
     }
+
+    func makeAlert(confirmButtonTapped: (() -> Void)?) -> UIAlertController {
+        let alert = UIAlertController(
+            title: Constant.LiteralString.Alert.Title.alert.rawValue,
+            message: Constant.LiteralString.Alert.message,
+            preferredStyle: .alert)
+
+        let confirm = UIAlertAction(
+            title: Constant.LiteralString.Alert.Title.confirm.rawValue,
+            style: .default,
+            handler: { _ in
+                confirmButtonTapped?()
+            })
+
+        let cancel = UIAlertAction(
+            title: Constant.LiteralString.Alert.Title.cancel.rawValue,
+            style: .cancel,
+            handler: nil)
+
+        alert.addAction(cancel)
+        alert.addAction(confirm)
+
+        return alert
+    }
 }

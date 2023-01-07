@@ -24,6 +24,7 @@ enum Constant {
         static let system13: UIFont = .systemFont(ofSize: 13)
         static let system14: UIFont = .systemFont(ofSize: 14)
         static let bold11: UIFont = .boldSystemFont(ofSize: 11)
+        static let bold13: UIFont = .boldSystemFont(ofSize: 13)
         static let bold15: UIFont = .boldSystemFont(ofSize: 15)
         static let bold17: UIFont = .boldSystemFont(ofSize: 17)
         static let bold19: UIFont = .boldSystemFont(ofSize: 19)
@@ -94,6 +95,16 @@ enum Constant {
             static let size = "크기"
             static let views = "조회수"
             static let downloads = "다운로드"
+        }
+
+        enum Alert {
+            static let message = "탈퇴를 하면 데이터가 모두 초기화됩니다. 탈퇴 하시겠습니까?"
+
+            enum Title: String {
+                case alert = "탈퇴하기"
+                case confirm = "확인"
+                case cancel = "취소"
+            }
         }
     }
 
