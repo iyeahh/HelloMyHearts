@@ -28,7 +28,9 @@ enum Constant {
         static let bold15: UIFont = .boldSystemFont(ofSize: 15)
         static let bold17: UIFont = .boldSystemFont(ofSize: 17)
         static let bold19: UIFont = .boldSystemFont(ofSize: 19)
+        static let name: UIFont = .systemFont(ofSize: 25, weight: .heavy)
         static let bold32: UIFont = .boldSystemFont(ofSize: 32)
+        static let title: UIFont? = UIFont(name: "Rockwell-Bold", size: 40)
     }
 
     enum Image {
@@ -49,7 +51,8 @@ enum Constant {
 
     enum LiteralString {
         enum Title {
-            static let service = "Hello, My Hearts"
+            static let service = "HELLO        MY HEARTS 💙"
+            static let name = "양보라"
 
             enum Button {
                 static let start = "시작하기"
