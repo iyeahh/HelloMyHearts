@@ -21,6 +21,7 @@ final class LikeTabelRepository {
             width: photo.width,
             height: photo.height,
             url: photo.urls.raw,
+            likes: photo.likes,
             photographerName: photo.user.name,
             photographerProfileImage: photo.user.profile_image.medium
         )

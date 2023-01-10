@@ -14,6 +14,7 @@ final class LikeTable: Object {
     @Persisted var width: Int
     @Persisted var height: Int
     @Persisted var url: String
+    @Persisted var likes: Int
     @Persisted var photographerName: String
     @Persisted var photographerProfileImage: String
     @Persisted var regDate: Date
@@ -24,6 +25,7 @@ final class LikeTable: Object {
         width: Int,
         height: Int,
         url: String,
+        likes: Int,
         photographerName: String,
         photographerProfileImage: String
     ) {
@@ -32,6 +34,7 @@ final class LikeTable: Object {
         self.createdDate = createdDate
         self.width = width
         self.height = height
+        self.likes = likes
         self.url = url
         self.photographerName = photographerName
         self.photographerProfileImage = photographerProfileImage

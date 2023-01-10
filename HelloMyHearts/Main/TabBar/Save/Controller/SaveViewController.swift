@@ -152,4 +152,10 @@ extension SaveViewController: UICollectionViewDelegate, UICollectionViewDataSour
         cell.configureData(image: image)
         return cell
     }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let data = likePhotoList[indexPath.item]
+        let photo = Photo(id: data.id, created_at: data.createdDate, width: data.width, height: data.height, urls: URLImage(raw: data.url, small: ""), likes: data.likes, user: Photographer(name: data.photographerName, profile_image: Profile(medium: data.photographerProfileImage)))
+        moveNextVC(vc: DetailViewController(photo: photo))
+    }
 }

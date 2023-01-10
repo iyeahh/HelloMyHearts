@@ -84,6 +84,10 @@ final class DetailViewController: BaseViewController {
         profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
     }
 
+    override func configureNavi() {
+        navigationController?.navigationBar.isHidden = false
+    }
+
     override func configureHierarchy() {
         [topBarView, profileImageView, nameLable, regDateLabel, likeButton, imageView, informataionLabel, sizeLabel, sizeDataLabel, viewsLabel, viewsDataLabel, downloadLabel, downloadDataLabel].forEach { view.addSubview($0) }
     }

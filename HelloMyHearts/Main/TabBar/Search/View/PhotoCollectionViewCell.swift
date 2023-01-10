@@ -71,12 +71,12 @@ final class PhotoCollectionViewCell: BaseCollectionViewCell {
         isLike = true
     }
 
-    func configureData(photo: TopicPhoto) {
+    func configureData(topicPhoto: Photo) {
         mainImageView.layer.masksToBounds = true
         mainImageView.layer.cornerRadius = 20
-        let url = URL(string: photo.urls.small)
+        let url = URL(string: topicPhoto.urls.small)
         mainImageView.kf.setImage(with: url)
-        likeCountLabel.setLabelText(photo.likes.formatted())
+        likeCountLabel.setLabelText(topicPhoto.likes.formatted())
         likeButton.isHidden = true
     }
 

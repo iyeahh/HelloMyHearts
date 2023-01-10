@@ -38,7 +38,7 @@ final class TrendViewController: BaseViewController {
         return tableView
     }()
 
-    var imageList: [[TopicPhoto]] = [[], [], []]
+    var imageList: [[Photo]] = [[], [], []]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,7 +91,7 @@ final class TrendViewController: BaseViewController {
         Topic.allCases.forEach { topic in
             group.enter()
             DispatchQueue.global().async(group: group) {
-                APIService.shared.callRequest(api: .fetchTopicPhoto(topic: topic)) { [weak self] (response: Result<[TopicPhoto], Error>) in
+                APIService.shared.callRequest(api: .fetchTopicPhoto(topic: topic)) { [weak self] (response: Result<[Photo], Error>) in
                     guard let self else { return }
                     switch response {
                     case .success(let success):
@@ -158,7 +158,12 @@ extension TrendViewController: UICollectionViewDelegate, UICollectionViewDataSou
         }
 
         let data = imageList[collectionView.tag][indexPath.item]
-        cell.configureData(photo: data)
+        cell.configureData(topicPhoto: data)
         return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let data = imageList[collectionView.tag][indexPath.item]
+        moveNextVC(vc: DetailViewController(photo: data))
     }
 }
