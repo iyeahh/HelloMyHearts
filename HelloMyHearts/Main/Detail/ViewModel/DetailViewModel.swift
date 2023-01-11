@@ -9,7 +9,8 @@ import Foundation
 
 final class DetailViewModel {
     var photo: Photo?
-    
+    var isLike = false
+
     var inputViewDidLoad: Observable<Void?> = Observable(nil)
     var inputLikeToggle: Observable<Void?> = Observable(nil)
     var outputLikeToggle: Observable<Bool?> = Observable(nil)
@@ -24,7 +25,7 @@ final class DetailViewModel {
             guard let self,
                   value != nil,
             let photo else { return }
-            outputLikeToggle.value = LikeTabelRepository.shared.checkIsLike(id: photo.id)
+            isLike = LikeTabelRepository.shared.checkIsLike(id: photo.id)
 
             fetchPhotoData { [weak self] photoData in
                 guard let self else { return }
@@ -35,17 +36,24 @@ final class DetailViewModel {
         inputLikeToggle.bind { [weak self] value in
             guard value != nil,
                   let self,
-                  let photo,
-            let isLike = outputLikeToggle.value else { return }
+                  let photo else { return }
 
-            if isLike {
+            var isLikeValue: Bool
+
+            if let outputLike = outputLikeToggle.value {
+                isLikeValue = outputLike
+            } else {
+                isLikeValue = isLike
+            }
+
+            if isLikeValue {
                 DocumentManager.shared.removeImageFromDocument(id: photo.id)
                 LikeTabelRepository.shared.deleteLike(id: photo.id)
             } else {
                 DocumentManager.shared.saveImageToDocument(urlString: photo.urls.small, id: photo.id)
                 LikeTabelRepository.shared.createLike(photo: photo)
             }
-            outputLikeToggle.value = !isLike
+            outputLikeToggle.value = !isLikeValue
         }
     }
 

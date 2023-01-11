@@ -76,6 +76,12 @@ final class DetailViewController: BaseViewController {
         super.viewDidLoad()
         bindData()
         viewModel.inputViewDidLoad.value = ()
+
+        if viewModel.isLike {
+            likeButton.setImage(Constant.Image.Icon.Like.like, for: .normal)
+        } else {
+            likeButton.setImage(Constant.Image.Icon.Like.likeInactive, for: .normal)
+        }
     }
 
     override func viewDidLayoutSubviews() {
