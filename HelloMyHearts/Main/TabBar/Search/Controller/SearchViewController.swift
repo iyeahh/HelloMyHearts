@@ -109,6 +109,7 @@ extension SearchViewController {
     }
 
     private func configureCollectionView() {
+        collectionView.keyboardDismissMode = .onDrag
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.prefetchDataSource = self
