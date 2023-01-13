@@ -123,6 +123,7 @@ extension SaveViewController {
 
         sortButton.titleConfiuration(title: sortValue.title)
         likePhotoList = LikeTabelRepository.shared.sortDate(standard: sortValue)
+        collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
     }
 }
 

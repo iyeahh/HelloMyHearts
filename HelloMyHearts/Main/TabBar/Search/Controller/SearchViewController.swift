@@ -119,7 +119,12 @@ extension SearchViewController {
     @objc private func sortButtonTapped() {
         searchPhoto.sort.toggle()
         sortButton.titleConfiuration(title: searchPhoto.sortValue.title)
+        searchPhoto.page = 1
         callRequest()
+    }
+
+    private func isOnlyWhitespace(text: String) -> Bool {
+        return text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
     private func callRequest() {
@@ -203,7 +208,8 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
 
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let text = searchBar.text else {
+        guard let text = searchBar.text,
+        !isOnlyWhitespace(text: text) else {
             return
         }
         searchPhoto.page = 1
