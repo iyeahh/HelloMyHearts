@@ -30,7 +30,7 @@ enum Constant {
         static let bold19: UIFont = .boldSystemFont(ofSize: 19)
         static let name: UIFont = .systemFont(ofSize: 25, weight: .heavy)
         static let bold32: UIFont = .boldSystemFont(ofSize: 32)
-        static let title: UIFont? = UIFont(name: "Rockwell-Bold", size: 40)
+        static let title: UIFont? = UIFont(name: "Rockwell-Bold", size: 35)
     }
 
     enum Image {
