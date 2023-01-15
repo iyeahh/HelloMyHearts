@@ -70,6 +70,8 @@
 		76C1DBD42C578D3700025575 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 76C1DBD32C578D3700025575 /* Alamofire */; };
 		76C1DBDC2C578D4700025575 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 76C1DBDB2C578D4700025575 /* SnapKit */; };
 		76C1DBDD2C578D9300025575 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 76C1DBCA2C578D1E00025575 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		76C1DBE32C57954600025575 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C1DBE22C57954600025575 /* NetworkMonitor.swift */; };
+		76C1DBE52C57966900025575 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C1DBE42C57966900025575 /* NetworkError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -145,6 +147,8 @@
 		76B50D0B2C55536500E79B57 /* SetMbtiCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetMbtiCollectionViewCell.swift; sourceTree = "<group>"; };
 		76B50D0D2C555A2100E79B57 /* MBTI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBTI.swift; sourceTree = "<group>"; };
 		76B50D0F2C55A0A000E79B57 /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
+		76C1DBE22C57954600025575 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
+		76C1DBE42C57966900025575 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -327,6 +331,7 @@
 				768890042C512208006CD489 /* APIService.swift */,
 				768890092C5122AD006CD489 /* APIKey.swift */,
 				765DB64B2C54F4C500AF1515 /* URLComponent.swift */,
+				76C1DBE42C57966900025575 /* NetworkError.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -351,8 +356,9 @@
 		765DB6192C5281F400AF1515 /* Utill */ = {
 			isa = PBXGroup;
 			children = (
-				76B50D002C552E1A00E79B57 /* UserDefaultsManager */,
-				765DB63F2C5379A900AF1515 /* Documnet */,
+				76C1DBE12C57953900025575 /* NetworkMonitor */,
+				76B50D002C552E1A00E79B57 /* UserDefaults */,
+				765DB63F2C5379A900AF1515 /* Document */,
 				765DB6362C536EB100AF1515 /* Formatter */,
 				7641683F2C4E5D6E00C8845C /* API */,
 				765DB6182C5281E100AF1515 /* Realm */,
@@ -418,12 +424,12 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		765DB63F2C5379A900AF1515 /* Documnet */ = {
+		765DB63F2C5379A900AF1515 /* Document */ = {
 			isa = PBXGroup;
 			children = (
 				765DB6402C5379C500AF1515 /* DocumentManager.swift */,
 			);
-			path = Documnet;
+			path = Document;
 			sourceTree = "<group>";
 		};
 		765DB6422C54D92100AF1515 /* Controller */ = {
@@ -532,12 +538,12 @@
 			path = OnBoarding;
 			sourceTree = "<group>";
 		};
-		76B50D002C552E1A00E79B57 /* UserDefaultsManager */ = {
+		76B50D002C552E1A00E79B57 /* UserDefaults */ = {
 			isa = PBXGroup;
 			children = (
 				76B50D012C552E3300E79B57 /* UserDefaultsManager.swift */,
 			);
-			path = UserDefaultsManager;
+			path = UserDefaults;
 			sourceTree = "<group>";
 		};
 		76B50D072C553F3600E79B57 /* Model */ = {
@@ -554,6 +560,14 @@
 				76B50D0B2C55536500E79B57 /* SetMbtiCollectionViewCell.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		76C1DBE12C57953900025575 /* NetworkMonitor */ = {
+			isa = PBXGroup;
+			children = (
+				76C1DBE22C57954600025575 /* NetworkMonitor.swift */,
+			);
+			path = NetworkMonitor;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -651,7 +665,9 @@
 				765DB6412C5379C500AF1515 /* DocumentManager.swift in Sources */,
 				7641682C2C4E437500C8845C /* SaveViewController.swift in Sources */,
 				76B50CFB2C55292F00E79B57 /* OnBoardingViewController.swift in Sources */,
+				76C1DBE32C57954600025575 /* NetworkMonitor.swift in Sources */,
 				76B50D092C553F4F00E79B57 /* ProfileImageType.swift in Sources */,
+				76C1DBE52C57966900025575 /* NetworkError.swift in Sources */,
 				765DB64C2C54F4C500AF1515 /* URLComponent.swift in Sources */,
 				76B50CF52C55274A00E79B57 /* OnBoardingViewModel.swift in Sources */,
 				765DB6342C5366D900AF1515 /* PhotoData.swift in Sources */,

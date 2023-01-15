@@ -100,6 +100,11 @@ enum Constant {
             static let downloads = "다운로드"
         }
 
+        enum ErrorMessage {
+            static let unstableStatus = "네트워크 상태를 확인 후 다시 시도해 주세요"
+            static let failedResponse = "응답값 확인"
+        }
+
         enum Alert {
             static let message = "탈퇴를 하면 데이터가 모두 초기화됩니다. 탈퇴 하시겠습니까?"
 

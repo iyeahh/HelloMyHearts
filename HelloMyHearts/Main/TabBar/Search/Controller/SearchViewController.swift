@@ -128,7 +128,7 @@ extension SearchViewController {
     }
 
     private func callRequest() {
-        APIService.shared.callRequest(api: .search(query: searchPhoto.searhWord, page: searchPhoto.page, sort: searchPhoto.sortValue)) { [weak self] (response: Result<ResultPhoto, Error>) in
+        APIService.shared.callRequest(api: .search(query: searchPhoto.searhWord, page: searchPhoto.page, sort: searchPhoto.sortValue)) { [weak self] (response: Result<ResultPhoto, NetworkError>) in
             guard let self else { return }
 
             switch response {
@@ -157,7 +157,15 @@ extension SearchViewController {
                     collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
                 }
             case .failure(let failure):
-                print(failure)
+                switch failure {
+                case .unstableStatus:
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self else { return }
+                        view.makeToast(Constant.LiteralString.ErrorMessage.unstableStatus)
+                    }
+                case .failedResponse:
+                    print(Constant.LiteralString.ErrorMessage.failedResponse)
+                }
             }
         }
     }

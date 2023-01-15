@@ -13,7 +13,11 @@ final class APIService {
 
     private init() {}
 
-    func callRequest<T: Decodable>(api: URLComponent, completion: @escaping (Result<T, Error>) -> Void) {
+    func callRequest<T: Decodable>(api: URLComponent, completion: @escaping (Result<T, NetworkError>) -> Void) {
+        guard NetworkMonitor.shared.isConnected else {
+            completion(.failure(.unstableStatus))
+            return
+        }
 
         AF.request(api.url,
                    parameters: api.parameters)
@@ -21,8 +25,8 @@ final class APIService {
             switch response.result {
             case .success(let value):
                 completion(.success(value))
-            case .failure(let error):
-                completion(.failure(error))
+            case .failure:
+                completion(.failure(.failedResponse))
             }
         }
     }

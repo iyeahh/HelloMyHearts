@@ -57,7 +57,6 @@ final class DocumentManager {
             } catch {
                 print("file remove error", error)
             }
-
         } else {
             print("file no exist")
         }

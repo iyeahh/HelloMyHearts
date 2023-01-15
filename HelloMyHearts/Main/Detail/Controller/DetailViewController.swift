@@ -191,6 +191,12 @@ extension DetailViewController {
             downloadDataLabel.text = photoData.downloads.total.formatted()
             setLabelData()
         }
+
+        viewModel.outputErrorToast.bind { [weak self] value in
+            guard value != nil,
+                  let self else { return }
+            view.makeToast(Constant.LiteralString.ErrorMessage.unstableStatus)
+        }
     }
 
     private func setLabelData() {

@@ -91,13 +91,21 @@ final class TrendViewController: BaseViewController {
         Topic.allCases.forEach { topic in
             group.enter()
             DispatchQueue.global().async(group: group) {
-                APIService.shared.callRequest(api: .fetchTopicPhoto(topic: topic)) { [weak self] (response: Result<[Photo], Error>) in
+                APIService.shared.callRequest(api: .fetchTopicPhoto(topic: topic)) { [weak self] (response: Result<[Photo], NetworkError>) in
                     guard let self else { return }
                     switch response {
                     case .success(let success):
                         imageList[topic.rawValue] = success
                     case .failure(let failure):
-                        print(failure)
+                        switch failure {
+                        case .unstableStatus:
+                            DispatchQueue.main.async { [weak self] in
+                                guard let self else { return }
+                                view.makeToast(Constant.LiteralString.ErrorMessage.unstableStatus)
+                            }
+                        case .failedResponse:
+                            print(Constant.LiteralString.ErrorMessage.failedResponse)
+                        }
                     }
                     group.leave()
                 }
@@ -151,7 +159,7 @@ extension TrendViewController: UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageList[collectionView.tag].count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as? PhotoCollectionViewCell else {
             return UICollectionViewCell()

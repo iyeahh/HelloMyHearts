@@ -15,6 +15,7 @@ final class DetailViewModel {
     var inputLikeToggle: Observable<Void?> = Observable(nil)
     var outputLikeToggle: Observable<Bool?> = Observable(nil)
     var outputPhotoData: Observable<PhotoData?> = Observable(nil)
+    var outputErrorToast: Observable<Void?> = Observable(nil)
 
     init() {
         transform()
@@ -60,12 +61,18 @@ final class DetailViewModel {
     private func fetchPhotoData(completion: @escaping (PhotoData) -> Void) {
         guard let photo else { return }
 
-        APIService.shared.callRequest(api: .fetchPhotoData(id: photo.id)) { (response: Result<PhotoData, Error>) in
+        APIService.shared.callRequest(api: .fetchPhotoData(id: photo.id)) { [weak self] (response: Result<PhotoData, NetworkError>) in
+            guard let self else { return }
             switch response {
             case .success(let success):
                 completion(success)
             case .failure(let failure):
-                print("네트워킹 실패")
+                switch failure {
+                case .unstableStatus:
+                    outputErrorToast.value = ()
+                case .failedResponse:
+                    print(Constant.LiteralString.ErrorMessage.failedResponse)
+                }
             }
         }
     }
