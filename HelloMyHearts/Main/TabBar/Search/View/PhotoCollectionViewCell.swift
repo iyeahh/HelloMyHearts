@@ -43,7 +43,6 @@ final class PhotoCollectionViewCell: BaseCollectionViewCell {
 
         likeCountLabel.snp.makeConstraints { make in
             make.leading.bottom.equalToSuperview().inset(10)
-            make.width.equalToSuperview().dividedBy(3)
             make.height.equalTo(25)
         }
 
