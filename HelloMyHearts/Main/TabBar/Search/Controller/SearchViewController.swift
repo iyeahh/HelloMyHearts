@@ -41,6 +41,7 @@ final class SearchViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionView()
+        let _ = isEmptySearchBar()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -169,6 +170,16 @@ extension SearchViewController {
             }
         }
     }
+
+    private func isEmptySearchBar() -> Bool {
+        guard let text = searchBar.text,
+        !isOnlyWhitespace(text: text) else {
+            collectionView.isHidden = true
+            descriptionLabel.text = Constant.LiteralString.Search.EmptyDescription.word
+            return true
+        }
+        return false
+    }
 }
 
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
@@ -216,12 +227,10 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
 
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let text = searchBar.text,
-        !isOnlyWhitespace(text: text) else {
-            return
+        if !isEmptySearchBar() {
+            searchPhoto.page = 1
+            searchPhoto.searhWord = searchBar.text!
+            callRequest()
         }
-        searchPhoto.page = 1
-        searchPhoto.searhWord = text
-        callRequest()
     }
 }
