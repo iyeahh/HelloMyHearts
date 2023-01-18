@@ -38,15 +38,16 @@ final class TrendViewController: BaseViewController {
         return tableView
     }()
 
-    var imageList: [[Photo]] = [[], [], []]
+    let viewModel = TrendViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        callRequest()
+        viewModel.inputViewDidLoad.value = ()
+        bindData()
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        setProfileImageView()
+        viewModel.inputViewWillAppear.value = ()
         navigationController?.navigationBar.isHidden = true
     }
 
@@ -85,61 +86,41 @@ final class TrendViewController: BaseViewController {
         }
     }
 
-    private func callRequest() {
-        let group = DispatchGroup()
-
-        Topic.allCases.forEach { topic in
-            group.enter()
-            DispatchQueue.global().async(group: group) {
-                APIService.shared.callRequest(api: .fetchTopicPhoto(topic: topic)) { [weak self] (response: Result<[Photo], NetworkError>) in
-                    guard let self else { return }
-                    switch response {
-                    case .success(let success):
-                        imageList[topic.rawValue] = success
-                    case .failure(let failure):
-                        switch failure {
-                        case .unstableStatus:
-                            DispatchQueue.main.async { [weak self] in
-                                guard let self else { return }
-                                view.makeToast(Constant.LiteralString.ErrorMessage.unstableStatus)
-                            }
-                        case .failedResponse:
-                            print(Constant.LiteralString.ErrorMessage.failedResponse)
-                        }
-                    }
-                    group.leave()
-                }
-            }
-        }
-
-        group.notify(queue: .main) { [weak self] in
-            guard let self else { return }
-            tableView.reloadData()
-        }
-    }
-
-    func setProfileImageView() {
-        if let image = UserDefaultsManager.shared.getValue(key: .image),
-           let intImage = Int(image) {
-            profileImageView.image = UIImage.getProfileImage(intImage)
-        }
-    }
-
     @objc private func profileButtonTapped() {
         let editProfileVC = SetNicknameViewConroller(state: .edit)
         moveNextVC(vc: editProfileVC)
+    }
+
+    private func bindData() {
+        viewModel.outputErrorToast.bind { [weak self] value in
+            guard value != nil,
+                  let self else { return }
+            view.makeToast(Constant.LiteralString.ErrorMessage.unstableStatus)
+        }
+
+        viewModel.outputReloadTableView.bind { [weak self] _ in
+            guard let self else { return }
+            tableView.reloadData()
+        }
+
+        viewModel.outputImage.bind { [weak self] value in
+            guard let value,
+                  let self else { return }
+            profileImageView.image = UIImage.getProfileImage(value)
+        }
     }
 }
 
 extension TrendViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return imageList.count
+        return viewModel.imageList.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TrendTableViewCell.identifier, for: indexPath) as? TrendTableViewCell else {
             return UITableViewCell()
         }
+
         let title = Topic.allCases.map { topic in
             topic.title
         }
@@ -157,7 +138,7 @@ extension TrendViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension TrendViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageList[collectionView.tag].count
+        return viewModel.imageList[collectionView.tag].count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -165,13 +146,13 @@ extension TrendViewController: UICollectionViewDelegate, UICollectionViewDataSou
             return UICollectionViewCell()
         }
 
-        let data = imageList[collectionView.tag][indexPath.item]
+        let data = viewModel.imageList[collectionView.tag][indexPath.item]
         cell.configureData(topicPhoto: data)
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let data = imageList[collectionView.tag][indexPath.item]
+        let data = viewModel.imageList[collectionView.tag][indexPath.item]
         moveNextVC(vc: DetailViewController(photo: data))
     }
 }
