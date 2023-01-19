@@ -35,13 +35,14 @@ final class SearchViewController: BaseViewController {
 
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
     private let bottomBarView = BarView()
-
-    private var searchPhoto = SearchPhoto()
+    
+    private let viewModel = SearchViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionView()
-        let _ = isEmptySearchBar()
+        viewModel.inputViewDidLoad.value = searchBar.text
+        bindData()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -118,73 +119,62 @@ extension SearchViewController {
     }
 
     @objc private func sortButtonTapped() {
-        searchPhoto.sort.toggle()
-        sortButton.titleConfiuration(title: searchPhoto.sortValue.title)
-        searchPhoto.page = 1
-        callRequest()
+        viewModel.inputSortButtonTapped.value = ()
     }
+}
 
-    private func isOnlyWhitespace(text: String) -> Bool {
-        return text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-    }
-
-    private func callRequest() {
-        APIService.shared.callRequest(api: .search(query: searchPhoto.searhWord, page: searchPhoto.page, sort: searchPhoto.sortValue)) { [weak self] (response: Result<ResultPhoto, NetworkError>) in
+extension SearchViewController {
+    private func bindData() {
+        viewModel.outputPhotoList.bind { [weak self] _ in
             guard let self else { return }
+            collectionView.reloadData()
+        }
 
-            switch response {
-            case .success(let success):
-                guard !success.results.isEmpty else {
-                    collectionView.isHidden = true
-                    descriptionLabel.text = Constant.LiteralString.Search.EmptyDescription.result
-                    return
-                }
+        viewModel.outputSortButtonTitle.bind { [weak self] value in
+            guard let value,
+                  let self else { return }
+            sortButton.titleConfiuration(title: value)
+        }
 
-                collectionView.isHidden = false
-                descriptionLabel.text = ""
-
-                if searchPhoto.page == 1 {
-                    searchPhoto.photoList = success.results
-                } else {
-                    searchPhoto.photoList.append(contentsOf: success.results)
-                }
-
-                if searchPhoto.page == success.total_pages {
-                    searchPhoto.isEnd = true
-                }
-
-                collectionView.reloadData()
-                if searchPhoto.page == 1 {
-                    collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
-                }
-            case .failure(let failure):
-                switch failure {
-                case .unstableStatus:
-                    DispatchQueue.main.async { [weak self] in
-                        guard let self else { return }
-                        view.makeToast(Constant.LiteralString.ErrorMessage.unstableStatus)
-                    }
-                case .failedResponse:
-                    print(Constant.LiteralString.ErrorMessage.failedResponse)
-                }
+        viewModel.outputToastMessage.bind { [weak self] value in
+            guard let value,
+                  let self else { return }
+            if value {
+                view.makeToast(Constant.LiteralString.ToastMessage.addLike, duration: Constant.LiteralNumber.toastDuration)
+            } else {
+                view.makeToast(Constant.LiteralString.ToastMessage.removeLike, duration: Constant.LiteralNumber.toastDuration)
             }
         }
-    }
 
-    private func isEmptySearchBar() -> Bool {
-        guard let text = searchBar.text,
-        !isOnlyWhitespace(text: text) else {
-            collectionView.isHidden = true
-            descriptionLabel.text = Constant.LiteralString.Search.EmptyDescription.word
-            return true
+        viewModel.outputHideCollectionView.bind { [weak self] value in
+            guard let value,
+                  let self else { return }
+            collectionView.isHidden = value
         }
-        return false
+
+        viewModel.outputDescriptionText.bind { [weak self] value in
+            guard let value,
+                  let self else { return }
+            descriptionLabel.text = value
+        }
+
+        viewModel.outputErrorToast.bind { [weak self] value in
+            guard value != nil,
+                  let self else { return }
+            view.makeToast(Constant.LiteralString.ErrorMessage.unstableStatus)
+        }
+
+        viewModel.outputScrollToTop.bind { [weak self] value in
+            guard value != nil,
+                  let self else { return }
+            collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+        }
     }
 }
 
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return searchPhoto.photoList.count
+        return viewModel.outputPhotoList.value.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -192,45 +182,28 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
             return UICollectionViewCell()
         }
 
-        let photo = searchPhoto.photoList[indexPath.item]
+        let photo = viewModel.outputPhotoList.value[indexPath.item]
 
         cell.addLike = { [weak self] in
             guard let self else { return }
             cell.isLike.toggle()
-            if cell.isLike {
-                view.makeToast(Constant.LiteralString.ToastMessage.addLike, duration: Constant.LiteralNumber.toastDuration)
-                DocumentManager.shared.saveImageToDocument(urlString: photo.urls.small, id: photo.id)
-                LikeTabelRepository.shared.createLike(photo: photo)
-            } else {
-                view.makeToast(Constant.LiteralString.ToastMessage.removeLike, duration: Constant.LiteralNumber.toastDuration)
-                DocumentManager.shared.removeImageFromDocument(id: photo.id)
-                LikeTabelRepository.shared.deleteLike(id: photo.id)
-            }
+            viewModel.inputisLikeToggle.value = cell.isLike
         }
         cell.configureData(photo: photo)
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        for item in indexPaths {
-            if searchPhoto.photoList.count - 4 == item.row && !searchPhoto.isEnd {
-                searchPhoto.page += 1
-                callRequest()
-            }
-        }
+        viewModel.inputPrefetchCollectionView.value = indexPaths
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        moveNextVC(vc: DetailViewController(photo: searchPhoto.photoList[indexPath.item]))
+        moveNextVC(vc: DetailViewController(photo: viewModel.outputPhotoList.value[indexPath.item]))
     }
 }
 
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if !isEmptySearchBar() {
-            searchPhoto.page = 1
-            searchPhoto.searhWord = searchBar.text!
-            callRequest()
-        }
+        viewModel.inputSearchButtonTapped.value = searchBar.text
     }
 }

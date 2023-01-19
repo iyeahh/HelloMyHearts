@@ -38,7 +38,7 @@ final class TrendViewController: BaseViewController {
         return tableView
     }()
 
-    let viewModel = TrendViewModel()
+    private let viewModel = TrendViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
