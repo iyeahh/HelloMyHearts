@@ -74,6 +74,7 @@
 		76C1DBE52C57966900025575 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C1DBE42C57966900025575 /* NetworkError.swift */; };
 		76C1DBE82C57ABE000025575 /* TrendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C1DBE72C57ABE000025575 /* TrendViewModel.swift */; };
 		76C1DBEB2C57B05F00025575 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C1DBEA2C57B05F00025575 /* SearchViewModel.swift */; };
+		76C1DBEE2C57BBF100025575 /* SaveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C1DBED2C57BBF100025575 /* SaveViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -153,6 +154,7 @@
 		76C1DBE42C57966900025575 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		76C1DBE72C57ABE000025575 /* TrendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendViewModel.swift; sourceTree = "<group>"; };
 		76C1DBEA2C57B05F00025575 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		76C1DBED2C57BBF100025575 /* SaveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -284,6 +286,7 @@
 		764168242C4E432400C8845C /* Save */ = {
 			isa = PBXGroup;
 			children = (
+				76C1DBEC2C57BBE000025575 /* ViewModel */,
 				765DB6272C53441600AF1515 /* Model */,
 				765DB6262C533D4100AF1515 /* Controller */,
 			);
@@ -592,6 +595,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		76C1DBEC2C57BBE000025575 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				76C1DBED2C57BBF100025575 /* SaveViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -683,6 +694,7 @@
 				764168002C4E31E600C8845C /* AppDelegate.swift in Sources */,
 				7688900A2C5122AD006CD489 /* APIKey.swift in Sources */,
 				765DB6382C536EC400AF1515 /* DateFormatterManager.swift in Sources */,
+				76C1DBEE2C57BBF100025575 /* SaveViewModel.swift in Sources */,
 				765DB6312C535D8900AF1515 /* Bold15FontLabel.swift in Sources */,
 				765DB6412C5379C500AF1515 /* DocumentManager.swift in Sources */,
 				7641682C2C4E437500C8845C /* SaveViewController.swift in Sources */,

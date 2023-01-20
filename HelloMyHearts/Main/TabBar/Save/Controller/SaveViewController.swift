@@ -29,26 +29,16 @@ final class SaveViewController: BaseViewController {
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
     private let bottomBarView = BarView()
 
-    private var likePhotoList: [LikeTable] = [] {
-        didSet {
-            if likePhotoList.count == 0 {
-                descriptionLabel.text = "저장된 사진이 없어요"
-            } else {
-                descriptionLabel.text = ""
-            }
-            collectionView.reloadData()
-        }
-    }
-
-    private var sort = true
+    private let viewModel = SaveViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionView()
+        bindData()
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        likePhotoList = LikeTabelRepository.shared.readLike()
+        viewModel.inputViewWillAppear.value = ()
     }
 
     override func configureNavi() {
@@ -113,23 +103,41 @@ extension SaveViewController {
     }
 
     @objc private func sortButtonTapped() {
-        sort.toggle()
-        let sortValue: SortDate
-        if sort {
-            sortValue = .latest
-        } else {
-            sortValue = .oldest
+        viewModel.inputSortButtonTapped.value = ()
+    }
+}
+
+extension SaveViewController {
+    private func bindData() {
+        viewModel.outputLikePhotoList.bind { [weak self] likePhotoList in
+            guard let self else { return }
+            descriptionLabel.text = likePhotoList.count == 0 ? "저장된 사진이 없어요" : ""
+            collectionView.reloadData()
         }
 
-        sortButton.titleConfiuration(title: sortValue.title)
-        likePhotoList = LikeTabelRepository.shared.sortDate(standard: sortValue)
-        collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+        viewModel.outputSortButtonTitle.bind { [weak self] value in
+            guard let value,
+                  let self else { return }
+            sortButton.titleConfiuration(title: value)
+        }
+
+        viewModel.outputScrollToTop.bind { [weak self] value in
+            guard value != nil,
+                  let self else { return }
+            collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+        }
+
+        viewModel.outputToastMessage.bind { [weak self] value in
+            guard value != nil,
+                  let self else { return }
+            view.makeToast(Constant.LiteralString.ToastMessage.removeLike, duration: Constant.LiteralNumber.toastDuration)
+        }
     }
 }
 
 extension SaveViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return likePhotoList.count
+        return viewModel.outputLikePhotoList.value.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -137,26 +145,22 @@ extension SaveViewController: UICollectionViewDelegate, UICollectionViewDataSour
             return UICollectionViewCell()
         }
 
-        let photo = likePhotoList[indexPath.item]
+        let photo = viewModel.outputLikePhotoList.value[indexPath.item]
         let image = DocumentManager.shared.loadImageToDocument(id: photo.id)
 
         cell.addLike = { [weak self] in
             guard let self else { return }
             cell.isLike.toggle()
-            if !cell.isLike {
-                view.makeToast(Constant.LiteralString.ToastMessage.removeLike, duration: Constant.LiteralNumber.toastDuration)
-                DocumentManager.shared.removeImageFromDocument(id: photo.id)
-                LikeTabelRepository.shared.deleteLike(id: photo.id)
-                likePhotoList = LikeTabelRepository.shared.readLike()
-            }
+            viewModel.likedPhoto = photo
+            viewModel.inputRemoveLike.value = !cell.isLike
         }
         cell.configureData(image: image)
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let data = likePhotoList[indexPath.item]
-        let photo = Photo(id: data.id, created_at: data.createdDate, width: data.width, height: data.height, urls: URLImage(raw: data.url, small: ""), likes: data.likes, user: Photographer(name: data.photographerName, profile_image: Profile(medium: data.photographerProfileImage)))
+        viewModel.inputDidSelectCell.value = indexPath.item
+        guard let photo = viewModel.photo else { return }
         moveNextVC(vc: DetailViewController(photo: photo))
     }
 }

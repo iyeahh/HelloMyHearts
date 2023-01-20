@@ -13,7 +13,7 @@ final class SearchViewModel {
     var photo: Photo?
 
     var inputSortButtonTapped: Observable<Void?> = Observable(nil)
-    var inputisLikeToggle: Observable<Bool?> = Observable(nil)
+    var inputIsLikeToggle: Observable<Bool?> = Observable(nil)
     var inputPrefetchCollectionView: Observable<[IndexPath]?> = Observable(nil)
     var inputSearchButtonTapped: Observable<String?> = Observable(nil)
     var inputViewDidLoad: Observable<String?> = Observable(nil)
@@ -40,7 +40,7 @@ final class SearchViewModel {
             callRequest()
         }
 
-        inputisLikeToggle.bind { [weak self] value in
+        inputIsLikeToggle.bind { [weak self] value in
             guard let value,
                   let self,
             let photo else { return }
