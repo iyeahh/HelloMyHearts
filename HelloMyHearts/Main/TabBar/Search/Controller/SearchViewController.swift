@@ -187,6 +187,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         cell.addLike = { [weak self] in
             guard let self else { return }
             cell.isLike.toggle()
+            viewModel.photo = photo
             viewModel.inputIsLikeToggle.value = cell.isLike
         }
         cell.configureData(photo: photo)

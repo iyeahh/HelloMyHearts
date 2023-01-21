@@ -9,7 +9,6 @@ import Foundation
 
 final class SearchViewModel {
     private var searchPhoto = SearchPhoto()
-
     var photo: Photo?
 
     var inputSortButtonTapped: Observable<Void?> = Observable(nil)
