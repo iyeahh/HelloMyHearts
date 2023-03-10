@@ -40,6 +40,7 @@ final class SearchViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : Constant.Color.accent]
         configureCollectionView()
         viewModel.inputViewDidLoad.value = searchBar.text
         bindData()

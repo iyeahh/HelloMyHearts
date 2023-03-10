@@ -44,6 +44,8 @@ final class OnBoardingViewController: BaseViewController {
         view.addSubview(serviceTitleLabel)
         view.addSubview(nameLabel)
         view.addSubview(startButton)
+
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : Constant.Color.accent]
     }
 
     override func configureLayout() {

@@ -12,18 +12,18 @@ final class DateFormatterManager {
 
     private init() {}
 
-    static let dateFormatter = {
+    private let dateFormatter = {
         let formatter = DateFormatter()
         return formatter
     }()
 
     func dateFormat(_ date: String) -> String {
-        let dateFormatter = DateFormatterManager.dateFormatter
+        let dateFormatter = dateFormatter
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
 
         guard let convertDate = dateFormatter.date(from: date) else { return ""}
 
-        let myDateFormatter = DateFormatterManager.dateFormatter
+        let myDateFormatter = dateFormatter
         myDateFormatter.dateFormat = "yyyy년 M월 d일 게시됨"
         return myDateFormatter.string(from: convertDate)
     }

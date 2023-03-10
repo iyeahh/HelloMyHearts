@@ -25,6 +25,7 @@ final class TrendViewController: BaseViewController {
         let label = UILabel()
         label.text = TabBar.trend.rawValue
         label.font = Constant.Font.bold32
+        label.textColor = Constant.Color.accent
         return label
     }()
 

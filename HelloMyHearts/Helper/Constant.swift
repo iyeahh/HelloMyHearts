@@ -11,7 +11,7 @@ enum Constant {
     enum Color {
         static let primary = UIColor(hex: 0xFFFFFF)
         static let secondary = UIColor(hex: 0x000000)
-        static let accent = UIColor(hex: 0x186FF2)
+        static let accent = UIColor.systemGreen
         static let warning = UIColor(hex: 0xF04452)
         static let secondaryDarkGray = UIColor(hex: 0x4D5652)
         static let secondaryGray = UIColor(hex: 0x8C8C8C)

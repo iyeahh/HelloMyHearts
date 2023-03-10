@@ -35,6 +35,7 @@ final class SaveViewController: BaseViewController {
         super.viewDidLoad()
         configureCollectionView()
         bindData()
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : Constant.Color.accent]
     }
 
     override func viewWillAppear(_ animated: Bool) {

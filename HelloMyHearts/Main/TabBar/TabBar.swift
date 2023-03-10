@@ -16,13 +16,13 @@ enum TabBar: String, CaseIterable {
     var activeImage: UIImage? {
         switch self {
         case .trend:
-            return UIImage(named: "tab_trend")?.withRenderingMode(.alwaysOriginal)
+            return UIImage(named: "tab_trend")?.withRenderingMode(.alwaysTemplate)
         case .randomImage:
-            return UIImage(named: "tab_random")?.withRenderingMode(.alwaysOriginal)
+            return UIImage(named: "tab_random")?.withRenderingMode(.alwaysTemplate)
         case .search:
-            return UIImage(named: "tab_search")?.withRenderingMode(.alwaysOriginal)
+            return UIImage(named: "tab_search")?.withRenderingMode(.alwaysTemplate)
         case .save:
-            return UIImage(named: "tab_like")?.withRenderingMode(.alwaysOriginal)
+            return UIImage(named: "tab_like")?.withRenderingMode(.alwaysTemplate)
         }
     }
 
