@@ -26,12 +26,15 @@ final class LikeTabelRepository {
         }
     }
 
-    func readLike() -> Results<LikeTable> {
-        return realm.objects(LikeTable.self)
+    func readLike() -> [LikeTable] {
+        let list = realm.objects(LikeTable.self)
+        return list.sorted {
+            $0.regDate > $1.regDate
+        }
     }
 
     func checkIsLike(id: String) -> Bool {
-        let data = readLike().where {
+        let data = readLike().filter {
             $0.id == id
         }
 
@@ -43,7 +46,7 @@ final class LikeTabelRepository {
     }
 
     func deleteLike(id: String) {
-        let data = readLike().where {
+        let data = readLike().filter {
             $0.id == id
         }
 
@@ -53,6 +56,19 @@ final class LikeTabelRepository {
             }
         } catch {
             print("좋아요 삭제가 되지 않았어요")
+        }
+    }
+
+    func sortDate(standard: SortDate) -> [LikeTable] {
+        let list = readLike()
+        if standard == .latest {
+            return list.sorted {
+                $0.regDate > $1.regDate
+            }
+        } else {
+            return list.sorted {
+                $0.regDate < $1.regDate
+            }
         }
     }
 }

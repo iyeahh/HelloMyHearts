@@ -1,5 +1,5 @@
 //
-//  SearchPhotoCollectionViewCell.swift
+//  PhotoCollectionViewCell.swift
 //  HelloMyHearts
 //
 //  Created by Bora Yang on 7/22/24.
@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Kingfisher
 
-final class SearchPhotoCollectionViewCell: BaseCollectionViewCell {
+final class PhotoCollectionViewCell: BaseCollectionViewCell {
     private let mainImageView = UIImageView()
     private let likeCountLabel = GrayBackgroundView()
     private lazy var likeButton = {
@@ -62,6 +62,13 @@ final class SearchPhotoCollectionViewCell: BaseCollectionViewCell {
         } else {
             isLike = false
         }
+    }
+
+    func configureData(image: UIImage?) {
+        guard let image else { return }
+        mainImageView.image = image
+        likeCountLabel.isHidden = true
+        isLike = true
     }
 
     @objc private func likeButtonTapped() {
