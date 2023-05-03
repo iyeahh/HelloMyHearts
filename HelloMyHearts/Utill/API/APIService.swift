@@ -34,4 +34,22 @@ final class APIService {
             }
         }
     }
+
+    func fetchPhotoData(id: String, completion: @escaping (Result<PhotoData, Error>) -> Void) {
+        let param: Parameters = [
+            Constant.API.param.key: APIKey.apiKey
+        ]
+
+        AF.request("https://api.unsplash.com/photos/\(id)/statistics?",
+                   parameters: param
+        )
+        .responseDecodable(of: PhotoData.self) { response in
+            switch response.result {
+            case .success(let value):
+                completion(.success(value))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
 }

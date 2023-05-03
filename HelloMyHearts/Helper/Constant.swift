@@ -21,7 +21,10 @@ enum Constant {
 
     enum Font {
         static let system10: UIFont = .systemFont(ofSize: 10)
+        static let system13: UIFont = .systemFont(ofSize: 13)
+        static let bold11: UIFont = .boldSystemFont(ofSize: 11)
         static let bold15: UIFont = .boldSystemFont(ofSize: 15)
+        static let bold17: UIFont = .boldSystemFont(ofSize: 17)
     }
 
     enum Charactor {

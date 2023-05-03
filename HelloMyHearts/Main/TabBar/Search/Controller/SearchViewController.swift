@@ -175,7 +175,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
             if cell.isLike {
                 view.makeToast(Constant.LiteralString.ToastMessage.addLike, duration: Constant.LiteralNumber.toastDuration)
                 saveImageToDocument(urlString: photo.urls.small, id: photo.id)
-                LikeTabelRepository.shared.createLike(id: photo.id)
+                LikeTabelRepository.shared.createLike(photo: photo)
             } else {
                 view.makeToast(Constant.LiteralString.ToastMessage.removeLike, duration: Constant.LiteralNumber.toastDuration)
                 removeImageFromDocument(id: photo.id)
@@ -193,6 +193,10 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
                 callRequest()
             }
         }
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        moveNextVC(vc: DetailViewController(photo: searchPhoto.list[indexPath.item]))
     }
 }
 

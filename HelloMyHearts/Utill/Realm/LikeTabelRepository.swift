@@ -14,8 +14,16 @@ final class LikeTabelRepository {
 
     private init() {}
 
-    func createLike(id: String) {
-        let data = LikeTable(id: id, regDate: Date())
+    func createLike(photo: Photo) {
+        let data = LikeTable(
+            id: photo.id,
+            createdDate: photo.created_at,
+            width: photo.width,
+            height: photo.height,
+            url: photo.urls.raw,
+            photographerName: photo.user.name,
+            photographerProfileImage: photo.user.profile_image.medium
+        )
 
         do {
             try realm.write {

@@ -71,4 +71,11 @@ extension UIViewController {
             }
         }
     }
+
+    func moveNextVC(vc: UIViewController) {
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        backBarButtonItem.tintColor = .black
+        navigationItem.backBarButtonItem = backBarButtonItem
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
