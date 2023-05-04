@@ -26,7 +26,13 @@ final class DetailViewController: BaseViewController {
         return label
     }()
 
-    let likeButton = UIButton()
+    lazy var likeButton = {
+        let button = UIButton()
+        button.setImage(Constant.Image.Icon.Like.likeInactive, for: .normal)
+        button.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
+        return button
+    }()
+
     let imageView = UIImageView()
 
     let informataionLabel = {
@@ -56,6 +62,15 @@ final class DetailViewController: BaseViewController {
     let downloadDataLabel = TextAlignmentRightLabel()
 
     var photo: Photo
+    var isLike = false {
+        didSet {
+            if isLike {
+                likeButton.setImage(Constant.Image.Icon.Like.like, for: .normal)
+            } else {
+                likeButton.setImage(Constant.Image.Icon.Like.likeInactive, for: .normal)
+            }
+        }
+    }
 
     init(photo: Photo) {
         self.photo = photo
@@ -69,6 +84,7 @@ final class DetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setData()
+        isLike = LikeTabelRepository.shared.checkIsLike(id: photo.id)
     }
 
     override func viewDidLayoutSubviews() {
@@ -104,7 +120,7 @@ final class DetailViewController: BaseViewController {
         }
 
         likeButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().offset(15)
+            make.trailing.equalToSuperview().inset(15)
             make.top.equalTo(topBarView.snp.bottom).offset(10)
             make.size.equalTo(40)
         }
@@ -117,11 +133,11 @@ final class DetailViewController: BaseViewController {
 
         informataionLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(15)
-            make.top.equalTo(imageView.snp.bottom).offset(10)
+            make.top.equalTo(imageView.snp.bottom).offset(15)
         }
 
         sizeLabel.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(10)
+            make.top.equalTo(imageView.snp.bottom).offset(15)
             make.leading.equalTo(informataionLabel.snp.trailing).offset(50)
         }
 
@@ -175,5 +191,18 @@ extension DetailViewController {
         regDateLabel.text = DateFormatterManager.shared.dateFormat(photo.created_at)
         imageView.kf.setImage(with: image)
         sizeDataLabel.text = "\(photo.width) x \(photo.height)"
+    }
+
+    @objc private func likeButtonTapped() {
+        isLike.toggle()
+        if isLike {
+            view.makeToast(Constant.LiteralString.ToastMessage.addLike, duration: Constant.LiteralNumber.toastDuration)
+            saveImageToDocument(urlString: photo.urls.small, id: photo.id)
+            LikeTabelRepository.shared.createLike(photo: photo)
+        } else {
+            view.makeToast(Constant.LiteralString.ToastMessage.removeLike, duration: Constant.LiteralNumber.toastDuration)
+            removeImageFromDocument(id: photo.id)
+            LikeTabelRepository.shared.deleteLike(id: photo.id)
+        }
     }
 }
