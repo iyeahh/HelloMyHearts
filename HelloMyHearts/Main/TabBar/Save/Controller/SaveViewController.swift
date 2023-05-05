@@ -29,9 +29,9 @@ final class SaveViewController: BaseViewController {
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
     private let bottomBarView = BarView()
 
-    var list: [LikeTable] = [] {
+    private var likePhotoList: [LikeTable] = [] {
         didSet {
-            if list.count == 0 {
+            if likePhotoList.count == 0 {
                 descriptionLabel.text = "저장된 사진이 없어요"
             } else {
                 descriptionLabel.text = ""
@@ -40,7 +40,7 @@ final class SaveViewController: BaseViewController {
         }
     }
 
-    var sort = true
+    private var sort = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,7 +48,7 @@ final class SaveViewController: BaseViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        list = LikeTabelRepository.shared.readLike()
+        likePhotoList = LikeTabelRepository.shared.readLike()
     }
 
     override func configureNavi() {
@@ -122,13 +122,13 @@ extension SaveViewController {
         }
 
         sortButton.titleConfiuration(title: sortValue.title)
-        list = LikeTabelRepository.shared.sortDate(standard: sortValue)
+        likePhotoList = LikeTabelRepository.shared.sortDate(standard: sortValue)
     }
 }
 
 extension SaveViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return list.count
+        return likePhotoList.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -136,7 +136,7 @@ extension SaveViewController: UICollectionViewDelegate, UICollectionViewDataSour
             return UICollectionViewCell()
         }
 
-        let photo = list[indexPath.item]
+        let photo = likePhotoList[indexPath.item]
         let image = loadImageToDocument(id: photo.id)
 
         cell.addLike = { [weak self] in
@@ -146,7 +146,7 @@ extension SaveViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 view.makeToast(Constant.LiteralString.ToastMessage.removeLike, duration: Constant.LiteralNumber.toastDuration)
                 removeImageFromDocument(id: photo.id)
                 LikeTabelRepository.shared.deleteLike(id: photo.id)
-                list = LikeTabelRepository.shared.readLike()
+                likePhotoList = LikeTabelRepository.shared.readLike()
             }
         }
         cell.configureData(image: image)

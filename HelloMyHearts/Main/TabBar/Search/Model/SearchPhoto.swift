@@ -9,7 +9,7 @@ import Foundation
 
 struct SearchPhoto {
     var page = 1
-    var list: [Photo] = []
+    var photoList: [Photo] = []
     var isEnd = false
     var searhWord = ""
 

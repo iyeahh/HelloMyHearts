@@ -36,7 +36,7 @@ final class SearchViewController: BaseViewController {
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
     private let bottomBarView = BarView()
 
-    var searchPhoto = SearchPhoto()
+    private var searchPhoto = SearchPhoto()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -137,9 +137,9 @@ extension SearchViewController {
                 descriptionLabel.text = ""
 
                 if searchPhoto.page == 1 {
-                    searchPhoto.list = success.results
+                    searchPhoto.photoList = success.results
                 } else {
-                    searchPhoto.list.append(contentsOf: success.results)
+                    searchPhoto.photoList.append(contentsOf: success.results)
                 }
 
                 if searchPhoto.page == success.total_pages {
@@ -159,7 +159,7 @@ extension SearchViewController {
 
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return searchPhoto.list.count
+        return searchPhoto.photoList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -167,7 +167,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
             return UICollectionViewCell()
         }
 
-        let photo = searchPhoto.list[indexPath.item]
+        let photo = searchPhoto.photoList[indexPath.item]
 
         cell.addLike = { [weak self] in
             guard let self else { return }
@@ -188,7 +188,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
 
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for item in indexPaths {
-            if searchPhoto.list.count - 4 == item.row && !searchPhoto.isEnd {
+            if searchPhoto.photoList.count - 4 == item.row && !searchPhoto.isEnd {
                 searchPhoto.page += 1
                 callRequest()
             }
@@ -196,7 +196,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        moveNextVC(vc: DetailViewController(photo: searchPhoto.list[indexPath.item]))
+        moveNextVC(vc: DetailViewController(photo: searchPhoto.photoList[indexPath.item]))
     }
 }
 

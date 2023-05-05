@@ -24,7 +24,7 @@ class GrayBackgroundView: UIView {
         return imageView
     }()
 
-    let numberLabel = {
+    private let numberLabel = {
         let label = UILabel()
         label.textColor = Constant.Color.primary
         label.font = Constant.Font.system10
@@ -67,5 +67,9 @@ extension GrayBackgroundView {
             make.leading.equalToSuperview()
             make.trailing.equalTo(numberLabel.snp.trailing).offset(10)
         }
+    }
+
+    func setLabelText(_ text: String) {
+        numberLabel.text = text
     }
 }

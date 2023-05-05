@@ -10,59 +10,59 @@ import SnapKit
 import Kingfisher
 
 final class DetailViewController: BaseViewController {
-    let topBarView = BarView()
+    private let topBarView = BarView()
 
-    let profileImageView = UIImageView()
+    private let profileImageView = UIImageView()
 
-    let nameLable = {
+    private let nameLable = {
         let label = UILabel()
         label.font = Constant.Font.system13
         return label
     }()
 
-    let regDateLabel = {
+    private let regDateLabel = {
         let label = UILabel()
         label.font = Constant.Font.bold11
         return label
     }()
 
-    lazy var likeButton = {
+    private lazy var likeButton = {
         let button = UIButton()
         button.setImage(Constant.Image.Icon.Like.likeInactive, for: .normal)
         button.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
         return button
     }()
 
-    let imageView = UIImageView()
+    private let imageView = UIImageView()
 
-    let informataionLabel = {
+    private let informataionLabel = {
         let label = UILabel()
         label.font = Constant.Font.bold17
         label.text = Constant.LiteralString.Detail.information
         return label
     }()
 
-    let sizeLabel = {
+    private let sizeLabel = {
         let label = Bold15FontLabel(title: Constant.LiteralString.Detail.size)
         return label
     }()
 
-    let viewsLabel = {
+    private let viewsLabel = {
         let label = Bold15FontLabel(title: Constant.LiteralString.Detail.views)
         return label
     }()
 
-    let downloadLabel = {
+    private let downloadLabel = {
         let label = Bold15FontLabel(title: Constant.LiteralString.Detail.downloads)
         return label
     }()
 
-    let sizeDataLabel = TextAlignmentRightLabel()
-    let viewsDataLabel = TextAlignmentRightLabel()
-    let downloadDataLabel = TextAlignmentRightLabel()
+    private let sizeDataLabel = TextAlignmentRightLabel()
+    private let viewsDataLabel = TextAlignmentRightLabel()
+    private let downloadDataLabel = TextAlignmentRightLabel()
 
-    var photo: Photo
-    var isLike = false {
+    private var photo: Photo
+    private var isLike = false {
         didSet {
             if isLike {
                 likeButton.setImage(Constant.Image.Icon.Like.like, for: .normal)
@@ -169,7 +169,7 @@ final class DetailViewController: BaseViewController {
 }
 
 extension DetailViewController {
-    func setData() {
+    private func setData() {
         APIService.shared.fetchPhotoData(id: photo.id) { [weak self] response in
             guard let self else { return }
             switch response {

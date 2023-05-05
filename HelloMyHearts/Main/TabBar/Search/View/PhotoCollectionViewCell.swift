@@ -56,7 +56,7 @@ final class PhotoCollectionViewCell: BaseCollectionViewCell {
     func configureData(photo: Photo) {
         let url = URL(string: photo.urls.small)
         mainImageView.kf.setImage(with: url)
-        likeCountLabel.numberLabel.text = photo.likes.formatted()
+        likeCountLabel.setLabelText(photo.likes.formatted())
         if LikeTabelRepository.shared.checkIsLike(id: photo.id) {
             isLike = true
         } else {
