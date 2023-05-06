@@ -137,14 +137,14 @@ extension SaveViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
 
         let photo = likePhotoList[indexPath.item]
-        let image = loadImageToDocument(id: photo.id)
+        let image = DocumentManager.shared.loadImageToDocument(id: photo.id)
 
         cell.addLike = { [weak self] in
             guard let self else { return }
             cell.isLike.toggle()
             if !cell.isLike {
                 view.makeToast(Constant.LiteralString.ToastMessage.removeLike, duration: Constant.LiteralNumber.toastDuration)
-                removeImageFromDocument(id: photo.id)
+                DocumentManager.shared.removeImageFromDocument(id: photo.id)
                 LikeTabelRepository.shared.deleteLike(id: photo.id)
                 likePhotoList = LikeTabelRepository.shared.readLike()
             }

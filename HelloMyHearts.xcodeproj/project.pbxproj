@@ -42,6 +42,9 @@
 		765DB6312C535D8900AF1515 /* Bold15FontLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765DB6302C535D8900AF1515 /* Bold15FontLabel.swift */; };
 		765DB6342C5366D900AF1515 /* PhotoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765DB6332C5366D900AF1515 /* PhotoData.swift */; };
 		765DB6382C536EC400AF1515 /* DateFormatterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765DB6372C536EC400AF1515 /* DateFormatterManager.swift */; };
+		765DB63B2C53766100AF1515 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765DB63A2C53766100AF1515 /* DetailViewModel.swift */; };
+		765DB63E2C53767500AF1515 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765DB63D2C53767500AF1515 /* Observable.swift */; };
+		765DB6412C5379C500AF1515 /* DocumentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765DB6402C5379C500AF1515 /* DocumentManager.swift */; };
 		768890052C512208006CD489 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768890042C512208006CD489 /* APIService.swift */; };
 		768890082C51221D006CD489 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 768890072C51221D006CD489 /* Alamofire */; };
 		7688900A2C5122AD006CD489 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768890092C5122AD006CD489 /* APIKey.swift */; };
@@ -84,6 +87,9 @@
 		765DB6302C535D8900AF1515 /* Bold15FontLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bold15FontLabel.swift; sourceTree = "<group>"; };
 		765DB6332C5366D900AF1515 /* PhotoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoData.swift; sourceTree = "<group>"; };
 		765DB6372C536EC400AF1515 /* DateFormatterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterManager.swift; sourceTree = "<group>"; };
+		765DB63A2C53766100AF1515 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
+		765DB63D2C53767500AF1515 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		765DB6402C5379C500AF1515 /* DocumentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentManager.swift; sourceTree = "<group>"; };
 		768890042C512208006CD489 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		768890092C5122AD006CD489 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		7688900C2C512602006CD489 /* ResultPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultPhoto.swift; sourceTree = "<group>"; };
@@ -283,6 +289,8 @@
 		765DB6192C5281F400AF1515 /* Utill */ = {
 			isa = PBXGroup;
 			children = (
+				765DB63F2C5379A900AF1515 /* Documnet */,
+				765DB63C2C53766A00AF1515 /* Observable */,
 				765DB6362C536EB100AF1515 /* Formatter */,
 				7641683F2C4E5D6E00C8845C /* API */,
 				765DB6182C5281E100AF1515 /* Realm */,
@@ -309,6 +317,7 @@
 		765DB62A2C534A0900AF1515 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				765DB6392C53765100AF1515 /* ViewModel */,
 				765DB6322C5366CA00AF1515 /* Model */,
 				765DB62B2C534A1400AF1515 /* Controller */,
 			);
@@ -337,6 +346,30 @@
 				765DB6372C536EC400AF1515 /* DateFormatterManager.swift */,
 			);
 			path = Formatter;
+			sourceTree = "<group>";
+		};
+		765DB6392C53765100AF1515 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				765DB63A2C53766100AF1515 /* DetailViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		765DB63C2C53766A00AF1515 /* Observable */ = {
+			isa = PBXGroup;
+			children = (
+				765DB63D2C53767500AF1515 /* Observable.swift */,
+			);
+			path = Observable;
+			sourceTree = "<group>";
+		};
+		765DB63F2C5379A900AF1515 /* Documnet */ = {
+			isa = PBXGroup;
+			children = (
+				765DB6402C5379C500AF1515 /* DocumentManager.swift */,
+			);
+			path = Documnet;
 			sourceTree = "<group>";
 		};
 		7688900B2C5125D6006CD489 /* Model */ = {
@@ -437,6 +470,7 @@
 				7688900A2C5122AD006CD489 /* APIKey.swift in Sources */,
 				765DB6382C536EC400AF1515 /* DateFormatterManager.swift in Sources */,
 				765DB6312C535D8900AF1515 /* Bold15FontLabel.swift in Sources */,
+				765DB6412C5379C500AF1515 /* DocumentManager.swift in Sources */,
 				7641682C2C4E437500C8845C /* SaveViewController.swift in Sources */,
 				765DB6342C5366D900AF1515 /* PhotoData.swift in Sources */,
 				765DB61F2C52829600AF1515 /* LikeTable.swift in Sources */,
@@ -445,6 +479,7 @@
 				764168022C4E31E600C8845C /* SceneDelegate.swift in Sources */,
 				7641683C2C4E595300C8845C /* BaseViewController.swift in Sources */,
 				765DB62F2C53586B00AF1515 /* TextAlignmentRightLabel.swift in Sources */,
+				765DB63E2C53767500AF1515 /* Observable.swift in Sources */,
 				765DB6252C533AB900AF1515 /* SearchPhoto.swift in Sources */,
 				7688900D2C512602006CD489 /* ResultPhoto.swift in Sources */,
 				768890052C512208006CD489 /* APIService.swift in Sources */,
@@ -464,6 +499,7 @@
 				764168172C4E340C00C8845C /* Constant.swift in Sources */,
 				764168432C4E5F7200C8845C /* BorderedButton.swift in Sources */,
 				7641681E2C4E3FD700C8845C /* TabBar.swift in Sources */,
+				765DB63B2C53766100AF1515 /* DetailViewModel.swift in Sources */,
 				765DB62D2C534A2200AF1515 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

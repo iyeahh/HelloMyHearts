@@ -61,30 +61,21 @@ final class DetailViewController: BaseViewController {
     private let viewsDataLabel = TextAlignmentRightLabel()
     private let downloadDataLabel = TextAlignmentRightLabel()
 
-    private var photo: Photo
-    private var isLike = false {
-        didSet {
-            if isLike {
-                likeButton.setImage(Constant.Image.Icon.Like.like, for: .normal)
-            } else {
-                likeButton.setImage(Constant.Image.Icon.Like.likeInactive, for: .normal)
-            }
-        }
-    }
+    let viewModel = DetailViewModel()
 
     init(photo: Photo) {
-        self.photo = photo
+        viewModel.photo = photo
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        setData()
-        isLike = LikeTabelRepository.shared.checkIsLike(id: photo.id)
+        bindData()
+        viewModel.inputViewDidLoad.value = ()
     }
 
     override func viewDidLayoutSubviews() {
@@ -169,22 +160,32 @@ final class DetailViewController: BaseViewController {
 }
 
 extension DetailViewController {
-    private func setData() {
-        APIService.shared.fetchPhotoData(id: photo.id) { [weak self] response in
-            guard let self else { return }
-            switch response {
-            case .success(let success):
-                viewsDataLabel.text = success.views.total.formatted()
-                downloadDataLabel.text = success.downloads.total.formatted()
-                setLabelData()
-            case .failure(let failure):
-                print("네트워킹 실패")
+    private func bindData() {
+        viewModel.outputLikeToggle.bind { [weak self] value in
+            guard let value,
+                  let self else { return }
+
+            if value {
+                view.makeToast(Constant.LiteralString.ToastMessage.addLike, duration: Constant.LiteralNumber.toastDuration)
+                likeButton.setImage(Constant.Image.Icon.Like.like, for: .normal)
+            } else {
+                view.makeToast(Constant.LiteralString.ToastMessage.removeLike, duration: Constant.LiteralNumber.toastDuration)
+                likeButton.setImage(Constant.Image.Icon.Like.likeInactive, for: .normal)
             }
+        }
+
+        viewModel.outputPhotoData.bind { [weak self] photoData in
+            guard let self,
+                  let photoData else { return }
+            viewsDataLabel.text = photoData.views.total.formatted()
+            downloadDataLabel.text = photoData.downloads.total.formatted()
+            setLabelData()
         }
     }
 
     private func setLabelData() {
-        guard let profile = URL(string: photo.user.profile_image.medium),
+        guard let photo = viewModel.photo,
+              let profile = URL(string: photo.user.profile_image.medium),
               let image = URL(string: photo.urls.raw) else { return }
         profileImageView.kf.setImage(with: profile)
         nameLable.text = photo.user.name
@@ -194,15 +195,6 @@ extension DetailViewController {
     }
 
     @objc private func likeButtonTapped() {
-        isLike.toggle()
-        if isLike {
-            view.makeToast(Constant.LiteralString.ToastMessage.addLike, duration: Constant.LiteralNumber.toastDuration)
-            saveImageToDocument(urlString: photo.urls.small, id: photo.id)
-            LikeTabelRepository.shared.createLike(photo: photo)
-        } else {
-            view.makeToast(Constant.LiteralString.ToastMessage.removeLike, duration: Constant.LiteralNumber.toastDuration)
-            removeImageFromDocument(id: photo.id)
-            LikeTabelRepository.shared.deleteLike(id: photo.id)
-        }
+        viewModel.inputLikeToggle.value = ()
     }
 }

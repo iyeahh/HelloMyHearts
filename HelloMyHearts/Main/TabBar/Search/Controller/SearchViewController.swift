@@ -174,11 +174,11 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
             cell.isLike.toggle()
             if cell.isLike {
                 view.makeToast(Constant.LiteralString.ToastMessage.addLike, duration: Constant.LiteralNumber.toastDuration)
-                saveImageToDocument(urlString: photo.urls.small, id: photo.id)
+                DocumentManager.shared.saveImageToDocument(urlString: photo.urls.small, id: photo.id)
                 LikeTabelRepository.shared.createLike(photo: photo)
             } else {
                 view.makeToast(Constant.LiteralString.ToastMessage.removeLike, duration: Constant.LiteralNumber.toastDuration)
-                removeImageFromDocument(id: photo.id)
+                DocumentManager.shared.removeImageFromDocument(id: photo.id)
                 LikeTabelRepository.shared.deleteLike(id: photo.id)
             }
         }
