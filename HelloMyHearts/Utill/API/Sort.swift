@@ -16,9 +16,9 @@ enum Sort: String {
     var title: String {
         switch self {
         case .latest:
-            return "최신순"
-        case .releveant:
             return "관련순"
+        case .releveant:
+            return "최신순"
         }
     }
 }

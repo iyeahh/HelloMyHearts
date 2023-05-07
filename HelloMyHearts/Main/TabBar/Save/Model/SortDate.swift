@@ -14,9 +14,9 @@ enum SortDate {
     var title: String {
         switch self {
         case .latest:
-            return "최신순"
-        case .oldest:
             return "과거순"
+        case .oldest:
+            return "최신순"
         }
     }
 }
