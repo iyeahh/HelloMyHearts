@@ -101,7 +101,7 @@ enum Constant {
             enum EmptyDescription {
                 static let word = "사진을 검색해보세요"
                 static let result = "검색 결과가 없어요"
-                static let like = "저장한 사진이 없어요"
+                static let save = "저장한 사진이 없어요"
             }
         }
 

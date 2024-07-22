@@ -14,6 +14,12 @@
 		764168142C4E331700C8845C /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 764168132C4E331700C8845C /* .gitignore */; };
 		764168172C4E340C00C8845C /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764168162C4E340C00C8845C /* Constant.swift */; };
 		7641681A2C4E347000C8845C /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764168192C4E347000C8845C /* UIColor+.swift */; };
+		7641681E2C4E3FD700C8845C /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7641681D2C4E3FD700C8845C /* TabBar.swift */; };
+		764168202C4E426100C8845C /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7641681F2C4E426100C8845C /* TabBarViewController.swift */; };
+		764168262C4E434400C8845C /* TrendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764168252C4E434400C8845C /* TrendViewController.swift */; };
+		764168282C4E436400C8845C /* RandomImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764168272C4E436400C8845C /* RandomImageViewController.swift */; };
+		7641682A2C4E436D00C8845C /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764168292C4E436D00C8845C /* SearchViewController.swift */; };
+		7641682C2C4E437500C8845C /* SaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7641682B2C4E437500C8845C /* SaveViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +32,12 @@
 		764168132C4E331700C8845C /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		764168162C4E340C00C8845C /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		764168192C4E347000C8845C /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
+		7641681D2C4E3FD700C8845C /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		7641681F2C4E426100C8845C /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		764168252C4E434400C8845C /* TrendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendViewController.swift; sourceTree = "<group>"; };
+		764168272C4E436400C8845C /* RandomImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomImageViewController.swift; sourceTree = "<group>"; };
+		764168292C4E436D00C8845C /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		7641682B2C4E437500C8845C /* SaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +73,7 @@
 			children = (
 				764168182C4E346400C8845C /* Extensions */,
 				764168152C4E33FA00C8845C /* Helper */,
+				7641681B2C4E3F6400C8845C /* Main */,
 				764167FF2C4E31E600C8845C /* AppDelegate.swift */,
 				764168012C4E31E600C8845C /* SceneDelegate.swift */,
 				764168082C4E31E700C8845C /* Assets.xcassets */,
@@ -84,6 +97,59 @@
 				764168192C4E347000C8845C /* UIColor+.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		7641681B2C4E3F6400C8845C /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				7641681C2C4E3FC500C8845C /* TabBar */,
+				764168212C4E430F00C8845C /* Trend */,
+				764168222C4E431500C8845C /* RandomImage */,
+				764168232C4E431E00C8845C /* Search */,
+				764168242C4E432400C8845C /* Save */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		7641681C2C4E3FC500C8845C /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				7641681D2C4E3FD700C8845C /* TabBar.swift */,
+				7641681F2C4E426100C8845C /* TabBarViewController.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		764168212C4E430F00C8845C /* Trend */ = {
+			isa = PBXGroup;
+			children = (
+				764168252C4E434400C8845C /* TrendViewController.swift */,
+			);
+			path = Trend;
+			sourceTree = "<group>";
+		};
+		764168222C4E431500C8845C /* RandomImage */ = {
+			isa = PBXGroup;
+			children = (
+				764168272C4E436400C8845C /* RandomImageViewController.swift */,
+			);
+			path = RandomImage;
+			sourceTree = "<group>";
+		};
+		764168232C4E431E00C8845C /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				764168292C4E436D00C8845C /* SearchViewController.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		764168242C4E432400C8845C /* Save */ = {
+			isa = PBXGroup;
+			children = (
+				7641682B2C4E437500C8845C /* SaveViewController.swift */,
+			);
+			path = Save;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -158,9 +224,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				764168002C4E31E600C8845C /* AppDelegate.swift in Sources */,
+				7641682C2C4E437500C8845C /* SaveViewController.swift in Sources */,
 				7641681A2C4E347000C8845C /* UIColor+.swift in Sources */,
 				764168022C4E31E600C8845C /* SceneDelegate.swift in Sources */,
+				7641682A2C4E436D00C8845C /* SearchViewController.swift in Sources */,
+				764168202C4E426100C8845C /* TabBarViewController.swift in Sources */,
+				764168262C4E434400C8845C /* TrendViewController.swift in Sources */,
+				764168282C4E436400C8845C /* RandomImageViewController.swift in Sources */,
 				764168172C4E340C00C8845C /* Constant.swift in Sources */,
+				7641681E2C4E3FD700C8845C /* TabBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
