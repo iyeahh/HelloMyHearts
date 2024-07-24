@@ -7,11 +7,16 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 final class SearchPhotoCollectionViewCell: BaseCollectionViewCell {
     private let mainImageView = UIImageView()
     private let likeCountLabel = GrayBackgroundView()
-    private let likeButton = UIButton()
+    private let likeButton = {
+        let button = UIButton()
+        button.setImage(Constant.Image.Icon.Like.circleLikeInactive, for: .normal)
+        return button
+    }()
 
     override func configureHierarchy() {
         contentView.addSubview(mainImageView)
@@ -36,9 +41,7 @@ final class SearchPhotoCollectionViewCell: BaseCollectionViewCell {
         }
     }
 
-    override func configureData() {
-        mainImageView.backgroundColor = .systemGreen
-        likeCountLabel.numberLabel.text = "3929"
-        likeButton.setImage(Constant.Image.Icon.Like.circleLikeInactive, for: .normal)
+    func configureData(photo: Photo) {
+        likeCountLabel.numberLabel.text = photo.likes.formatted()
     }
 }

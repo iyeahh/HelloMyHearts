@@ -38,6 +38,17 @@ enum Constant {
         }
     }
 
+    enum API {
+        enum param {
+            static let query = "query"
+            static let page = "page"
+            static let perPage = "per_page"
+            static let perPageValue = 20
+            static let sort = "order_by"
+            static let key = "client_id"
+        }
+    }
+
     enum Image {
         static let launch = UIImage(named: "launchImage")
 

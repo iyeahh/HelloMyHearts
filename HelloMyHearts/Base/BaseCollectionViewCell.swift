@@ -21,5 +21,4 @@ class BaseCollectionViewCell: UICollectionViewCell {
     
     func configureHierarchy() {}
     func configureLayout() {}
-    func configureData() {}
 }

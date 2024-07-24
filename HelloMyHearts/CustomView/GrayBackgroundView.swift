@@ -45,8 +45,8 @@ class GrayBackgroundView: UIView {
 extension GrayBackgroundView {
     private func configureHierarchy() {
         addSubview(grayView)
-        addSubview(starImageView)
         addSubview(numberLabel)
+        addSubview(starImageView)
     }
 
     private func configureLayout() {
@@ -61,7 +61,7 @@ extension GrayBackgroundView {
             make.leading.equalTo(starImageView.snp.trailing).offset(5)
             make.verticalEdges.equalToSuperview()
         }
-
+        
         grayView.snp.makeConstraints { make in
             make.verticalEdges.edges.equalToSuperview()
             make.leading.equalToSuperview()

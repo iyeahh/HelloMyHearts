@@ -30,6 +30,11 @@
 		764168432C4E5F7200C8845C /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764168422C4E5F7200C8845C /* BorderedButton.swift */; };
 		764168462C4E62C500C8845C /* ReuseIdentifierProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764168452C4E62C500C8845C /* ReuseIdentifierProtocol.swift */; };
 		764168482C4E632600C8845C /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764168472C4E632600C8845C /* UIView+.swift */; };
+		768890052C512208006CD489 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768890042C512208006CD489 /* APIService.swift */; };
+		768890082C51221D006CD489 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 768890072C51221D006CD489 /* Alamofire */; };
+		7688900A2C5122AD006CD489 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768890092C5122AD006CD489 /* APIKey.swift */; };
+		7688900D2C512602006CD489 /* ResultPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7688900C2C512602006CD489 /* ResultPhoto.swift */; };
+		768890102C512ABA006CD489 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 7688900F2C512ABA006CD489 /* Kingfisher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +62,9 @@
 		764168422C4E5F7200C8845C /* BorderedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
 		764168452C4E62C500C8845C /* ReuseIdentifierProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseIdentifierProtocol.swift; sourceTree = "<group>"; };
 		764168472C4E632600C8845C /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
+		768890042C512208006CD489 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		768890092C5122AD006CD489 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		7688900C2C512602006CD489 /* ResultPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultPhoto.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,7 +72,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				768890102C512ABA006CD489 /* Kingfisher in Frameworks */,
 				764168372C4E504200C8845C /* SnapKit in Frameworks */,
+				768890082C51221D006CD489 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,6 +174,7 @@
 		764168232C4E431E00C8845C /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				7688900B2C5125D6006CD489 /* Model */,
 				7641682E2C4E486700C8845C /* ViewModel */,
 				7641682F2C4E4F1C00C8845C /* View */,
 				7641682D2C4E485800C8845C /* Controller */,
@@ -225,6 +236,8 @@
 			isa = PBXGroup;
 			children = (
 				764168402C4E5D9600C8845C /* Sort.swift */,
+				768890042C512208006CD489 /* APIService.swift */,
+				768890092C5122AD006CD489 /* APIKey.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -235,6 +248,14 @@
 				764168452C4E62C500C8845C /* ReuseIdentifierProtocol.swift */,
 			);
 			path = Protocol;
+			sourceTree = "<group>";
+		};
+		7688900B2C5125D6006CD489 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7688900C2C512602006CD489 /* ResultPhoto.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -255,6 +276,8 @@
 			name = HelloMyHearts;
 			packageProductDependencies = (
 				764168362C4E504200C8845C /* SnapKit */,
+				768890072C51221D006CD489 /* Alamofire */,
+				7688900F2C512ABA006CD489 /* Kingfisher */,
 			);
 			productName = HelloMyHearts;
 			productReference = 764167FC2C4E31E600C8845C /* HelloMyHearts.app */;
@@ -286,6 +309,8 @@
 			mainGroup = 764167F32C4E31E600C8845C;
 			packageReferences = (
 				764168352C4E504200C8845C /* XCRemoteSwiftPackageReference "SnapKit" */,
+				768890062C51221D006CD489 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				7688900E2C512ABA006CD489 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 764167FD2C4E31E600C8845C /* Products */;
 			projectDirPath = "";
@@ -315,11 +340,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				764168002C4E31E600C8845C /* AppDelegate.swift in Sources */,
+				7688900A2C5122AD006CD489 /* APIKey.swift in Sources */,
 				7641682C2C4E437500C8845C /* SaveViewController.swift in Sources */,
 				764168312C4E4F3300C8845C /* SearchPhotoCollectionViewCell.swift in Sources */,
 				7641681A2C4E347000C8845C /* UIColor+.swift in Sources */,
 				764168022C4E31E600C8845C /* SceneDelegate.swift in Sources */,
 				7641683C2C4E595300C8845C /* BaseViewController.swift in Sources */,
+				7688900D2C512602006CD489 /* ResultPhoto.swift in Sources */,
+				768890052C512208006CD489 /* APIService.swift in Sources */,
 				764168342C4E4F5200C8845C /* BaseCollectionViewCell.swift in Sources */,
 				7641683A2C4E509A00C8845C /* GrayBackgroundView.swift in Sources */,
 				7641682A2C4E436D00C8845C /* SearchViewController.swift in Sources */,
@@ -565,6 +593,22 @@
 				minimumVersion = 5.7.1;
 			};
 		};
+		768890062C51221D006CD489 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.9.1;
+			};
+		};
+		7688900E2C512ABA006CD489 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.12.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -572,6 +616,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 764168352C4E504200C8845C /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		768890072C51221D006CD489 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 768890062C51221D006CD489 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		7688900F2C512ABA006CD489 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7688900E2C512ABA006CD489 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -23,6 +23,9 @@ final class SearchViewController: BaseViewController {
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
     private let bottomBarView = BarView()
 
+    var page = 1
+    var list: [Photo] = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionView()
@@ -95,7 +98,7 @@ extension SearchViewController {
 
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return list.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -103,11 +106,26 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
             return UICollectionViewCell()
         }
 
-        cell.configureData()
+        cell.configureData(photo: list[indexPath.item])
         return cell
     }
 }
 
 extension SearchViewController: UISearchBarDelegate {
-    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let text = searchBar.text else {
+            return
+        }
+        APIService.shared.searchPhoto(query: text, page: page, sort: .releveant) { [weak self] value in
+            guard let self else { return }
+
+            switch value {
+            case .success(let success):
+                self.list = success.results
+                self.collectionView.reloadData()
+            case .failure(let failure):
+                print(failure)
+            }
+        }
+    }
 }
