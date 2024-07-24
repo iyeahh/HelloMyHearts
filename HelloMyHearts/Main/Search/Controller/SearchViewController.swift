@@ -21,10 +21,18 @@ final class SearchViewController: BaseViewController {
 
     private let sortButton = BorderedButton()
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
+    private let descriptionLabel = {
+        let label = UILabel()
+        label.font = Constant.Font.bold15
+        label.textAlignment = .center
+        return label
+    }()
     private let bottomBarView = BarView()
 
     var page = 1
     var list: [Photo] = []
+    var isEnd = false
+    var searhWord = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +49,7 @@ final class SearchViewController: BaseViewController {
         view.addSubview(sortButton)
         view.addSubview(bottomBarView)
         view.addSubview(collectionView)
+        view.addSubview(descriptionLabel)
     }
 
     override func configureLayout() {
@@ -72,6 +81,10 @@ final class SearchViewController: BaseViewController {
             make.top.equalTo(sortButton.snp.bottom).offset(5)
             make.bottom.equalTo(bottomBarView.snp.top)
         }
+
+        descriptionLabel.snp.makeConstraints { make in
+            make.centerY.centerX.equalToSuperview()
+        }
     }
 }
 
@@ -79,7 +92,43 @@ extension SearchViewController {
     private func configureCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.prefetchDataSource = self
         collectionView.register(SearchPhotoCollectionViewCell.self, forCellWithReuseIdentifier: SearchPhotoCollectionViewCell.identifier)
+    }
+
+    private func callRequest() {
+        APIService.shared.searchPhoto(query: searhWord, page: page, sort: .releveant) { [weak self] value in
+            guard let self else { return }
+
+            switch value {
+            case .success(let success):
+                guard !success.results.isEmpty else {
+                    collectionView.isHidden = true
+                    descriptionLabel.text = Constant.LiteralString.Search.EmptyDescription.result
+                    return
+                }
+
+                collectionView.isHidden = false
+                descriptionLabel.text = ""
+
+                if page == 1 {
+                    list = success.results
+                } else {
+                    list.append(contentsOf: success.results)
+                }
+
+                if page == success.total_pages {
+                    isEnd = true
+                }
+                
+                collectionView.reloadData()
+                if page == 1 {
+                    collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+                }
+            case .failure(let failure):
+                print(failure)
+            }
+        }
     }
 }
 
@@ -96,7 +145,7 @@ extension SearchViewController {
     }
 }
 
-extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return list.count
     }
@@ -109,6 +158,15 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         cell.configureData(photo: list[indexPath.item])
         return cell
     }
+
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        for item in indexPaths {
+            if list.count - 4 == item.row && !isEnd {
+                page += 1
+                callRequest()
+            }
+        }
+    }
 }
 
 extension SearchViewController: UISearchBarDelegate {
@@ -116,16 +174,8 @@ extension SearchViewController: UISearchBarDelegate {
         guard let text = searchBar.text else {
             return
         }
-        APIService.shared.searchPhoto(query: text, page: page, sort: .releveant) { [weak self] value in
-            guard let self else { return }
-
-            switch value {
-            case .success(let success):
-                self.list = success.results
-                self.collectionView.reloadData()
-            case .failure(let failure):
-                print(failure)
-            }
-        }
+        page = 1
+        searhWord = text
+        callRequest()
     }
 }
