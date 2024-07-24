@@ -20,6 +20,16 @@
 		764168282C4E436400C8845C /* RandomImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764168272C4E436400C8845C /* RandomImageViewController.swift */; };
 		7641682A2C4E436D00C8845C /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764168292C4E436D00C8845C /* SearchViewController.swift */; };
 		7641682C2C4E437500C8845C /* SaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7641682B2C4E437500C8845C /* SaveViewController.swift */; };
+		764168312C4E4F3300C8845C /* SearchPhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764168302C4E4F3300C8845C /* SearchPhotoCollectionViewCell.swift */; };
+		764168342C4E4F5200C8845C /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764168332C4E4F5200C8845C /* BaseCollectionViewCell.swift */; };
+		764168372C4E504200C8845C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 764168362C4E504200C8845C /* SnapKit */; };
+		7641683A2C4E509A00C8845C /* GrayBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764168392C4E509A00C8845C /* GrayBackgroundView.swift */; };
+		7641683C2C4E595300C8845C /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7641683B2C4E595300C8845C /* BaseViewController.swift */; };
+		7641683E2C4E5B3300C8845C /* BarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7641683D2C4E5B3300C8845C /* BarView.swift */; };
+		764168412C4E5D9600C8845C /* Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764168402C4E5D9600C8845C /* Sort.swift */; };
+		764168432C4E5F7200C8845C /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764168422C4E5F7200C8845C /* BorderedButton.swift */; };
+		764168462C4E62C500C8845C /* ReuseIdentifierProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764168452C4E62C500C8845C /* ReuseIdentifierProtocol.swift */; };
+		764168482C4E632600C8845C /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764168472C4E632600C8845C /* UIView+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +48,15 @@
 		764168272C4E436400C8845C /* RandomImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomImageViewController.swift; sourceTree = "<group>"; };
 		764168292C4E436D00C8845C /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		7641682B2C4E437500C8845C /* SaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveViewController.swift; sourceTree = "<group>"; };
+		764168302C4E4F3300C8845C /* SearchPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		764168332C4E4F5200C8845C /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		764168392C4E509A00C8845C /* GrayBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrayBackgroundView.swift; sourceTree = "<group>"; };
+		7641683B2C4E595300C8845C /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		7641683D2C4E5B3300C8845C /* BarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarView.swift; sourceTree = "<group>"; };
+		764168402C4E5D9600C8845C /* Sort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sort.swift; sourceTree = "<group>"; };
+		764168422C4E5F7200C8845C /* BorderedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
+		764168452C4E62C500C8845C /* ReuseIdentifierProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseIdentifierProtocol.swift; sourceTree = "<group>"; };
+		764168472C4E632600C8845C /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				764168372C4E504200C8845C /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,6 +91,10 @@
 		764167FE2C4E31E600C8845C /* HelloMyHearts */ = {
 			isa = PBXGroup;
 			children = (
+				764168442C4E62B300C8845C /* Protocol */,
+				7641683F2C4E5D6E00C8845C /* API */,
+				764168382C4E508600C8845C /* CustomView */,
+				764168322C4E4F4300C8845C /* Base */,
 				764168182C4E346400C8845C /* Extensions */,
 				764168152C4E33FA00C8845C /* Helper */,
 				7641681B2C4E3F6400C8845C /* Main */,
@@ -95,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				764168192C4E347000C8845C /* UIColor+.swift */,
+				764168472C4E632600C8845C /* UIView+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -139,7 +164,9 @@
 		764168232C4E431E00C8845C /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				764168292C4E436D00C8845C /* SearchViewController.swift */,
+				7641682E2C4E486700C8845C /* ViewModel */,
+				7641682F2C4E4F1C00C8845C /* View */,
+				7641682D2C4E485800C8845C /* Controller */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -150,6 +177,64 @@
 				7641682B2C4E437500C8845C /* SaveViewController.swift */,
 			);
 			path = Save;
+			sourceTree = "<group>";
+		};
+		7641682D2C4E485800C8845C /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				764168292C4E436D00C8845C /* SearchViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		7641682E2C4E486700C8845C /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		7641682F2C4E4F1C00C8845C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				764168302C4E4F3300C8845C /* SearchPhotoCollectionViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		764168322C4E4F4300C8845C /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				764168332C4E4F5200C8845C /* BaseCollectionViewCell.swift */,
+				7641683B2C4E595300C8845C /* BaseViewController.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		764168382C4E508600C8845C /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				764168392C4E509A00C8845C /* GrayBackgroundView.swift */,
+				7641683D2C4E5B3300C8845C /* BarView.swift */,
+				764168422C4E5F7200C8845C /* BorderedButton.swift */,
+			);
+			path = CustomView;
+			sourceTree = "<group>";
+		};
+		7641683F2C4E5D6E00C8845C /* API */ = {
+			isa = PBXGroup;
+			children = (
+				764168402C4E5D9600C8845C /* Sort.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		764168442C4E62B300C8845C /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				764168452C4E62C500C8845C /* ReuseIdentifierProtocol.swift */,
+			);
+			path = Protocol;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -168,6 +253,9 @@
 			dependencies = (
 			);
 			name = HelloMyHearts;
+			packageProductDependencies = (
+				764168362C4E504200C8845C /* SnapKit */,
+			);
 			productName = HelloMyHearts;
 			productReference = 764167FC2C4E31E600C8845C /* HelloMyHearts.app */;
 			productType = "com.apple.product-type.application";
@@ -196,6 +284,9 @@
 				Base,
 			);
 			mainGroup = 764167F32C4E31E600C8845C;
+			packageReferences = (
+				764168352C4E504200C8845C /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 764167FD2C4E31E600C8845C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -225,13 +316,22 @@
 			files = (
 				764168002C4E31E600C8845C /* AppDelegate.swift in Sources */,
 				7641682C2C4E437500C8845C /* SaveViewController.swift in Sources */,
+				764168312C4E4F3300C8845C /* SearchPhotoCollectionViewCell.swift in Sources */,
 				7641681A2C4E347000C8845C /* UIColor+.swift in Sources */,
 				764168022C4E31E600C8845C /* SceneDelegate.swift in Sources */,
+				7641683C2C4E595300C8845C /* BaseViewController.swift in Sources */,
+				764168342C4E4F5200C8845C /* BaseCollectionViewCell.swift in Sources */,
+				7641683A2C4E509A00C8845C /* GrayBackgroundView.swift in Sources */,
 				7641682A2C4E436D00C8845C /* SearchViewController.swift in Sources */,
+				7641683E2C4E5B3300C8845C /* BarView.swift in Sources */,
 				764168202C4E426100C8845C /* TabBarViewController.swift in Sources */,
 				764168262C4E434400C8845C /* TrendViewController.swift in Sources */,
+				764168462C4E62C500C8845C /* ReuseIdentifierProtocol.swift in Sources */,
 				764168282C4E436400C8845C /* RandomImageViewController.swift in Sources */,
+				764168412C4E5D9600C8845C /* Sort.swift in Sources */,
+				764168482C4E632600C8845C /* UIView+.swift in Sources */,
 				764168172C4E340C00C8845C /* Constant.swift in Sources */,
+				764168432C4E5F7200C8845C /* BorderedButton.swift in Sources */,
 				7641681E2C4E3FD700C8845C /* TabBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -455,6 +555,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		764168352C4E504200C8845C /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		764168362C4E504200C8845C /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 764168352C4E504200C8845C /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 764167F42C4E31E600C8845C /* Project object */;
 }

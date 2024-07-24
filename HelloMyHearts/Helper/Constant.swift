@@ -16,6 +16,12 @@ enum Constant {
         static let secondaryDarkGray = UIColor(hex: 0x4D5652)
         static let secondaryGray = UIColor(hex: 0x8C8C8C)
         static let secondaryLightGray = UIColor(hex: 0xF2F2F2)
+        static let star = UIColor.systemYellow
+    }
+
+    enum Font {
+        static let system10: UIFont = .systemFont(ofSize: 10)
+        static let bold15: UIFont = .boldSystemFont(ofSize: 15)
     }
 
     enum Charactor {
@@ -37,13 +43,12 @@ enum Constant {
 
         enum Icon {
             enum Like {
-                static let like = UIImage(systemName: "like")
-                static let likeInactive = UIImage(systemName: "like_inactive")
-                static let circleLike = UIImage(systemName: "like_circle")
-                static let circleLikeInactive = UIImage(systemName: "like_circle_inactive")
+                static let like = UIImage(named: "like")
+                static let likeInactive = UIImage(named: "like_inactive")
+                static let circleLike = UIImage(named: "like_circle")
+                static let circleLikeInactive = UIImage(named: "like_circle_inactive")
             }
 
-            static let sort = UIImage(systemName: "sort")
             static let camera = UIImage(systemName: "camera.fill")
             static let star = UIImage(systemName: "star.fill")
         }
@@ -111,5 +116,9 @@ enum Constant {
             static let views = "조회수"
             static let downloads = "다운로드"
         }
+    }
+
+    enum LiteralInt {
+        static let cornerRadius: CGFloat = 12
     }
 }
