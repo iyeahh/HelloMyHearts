@@ -42,6 +42,8 @@ final class SearchPhotoCollectionViewCell: BaseCollectionViewCell {
     }
 
     func configureData(photo: Photo) {
+        let url = URL(string: photo.urls.small)
+        mainImageView.kf.setImage(with: url)
         likeCountLabel.numberLabel.text = photo.likes.formatted()
     }
 }
