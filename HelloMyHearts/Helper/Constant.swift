@@ -77,6 +77,11 @@ enum Constant {
             }
         }
 
+        enum ToastMessage {
+            static let addLike = "좋아요가 추가되었어요"
+            static let removeLike = "좋아요가 제거되었어요"
+        }
+
         enum Nickname {
             static let placeholer = "닉네임을 입력해주세요 :)"
             static let possible = "사용할 수 있는 닉네임이에요."
@@ -129,7 +134,8 @@ enum Constant {
         }
     }
 
-    enum LiteralInt {
+    enum LiteralNumber {
         static let cornerRadius: CGFloat = 12
+        static let toastDuration = 1.0
     }
 }

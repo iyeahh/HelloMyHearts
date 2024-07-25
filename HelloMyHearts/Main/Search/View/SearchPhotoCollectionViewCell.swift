@@ -12,11 +12,23 @@ import Kingfisher
 final class SearchPhotoCollectionViewCell: BaseCollectionViewCell {
     private let mainImageView = UIImageView()
     private let likeCountLabel = GrayBackgroundView()
-    private let likeButton = {
+    private lazy var likeButton = {
         let button = UIButton()
         button.setImage(Constant.Image.Icon.Like.circleLikeInactive, for: .normal)
+        button.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
         return button
     }()
+
+    var addLike: (()-> Void?)?
+    var isLike = false {
+        didSet {
+            if isLike {
+                likeButton.setImage(Constant.Image.Icon.Like.circleLike, for: .normal)
+            } else {
+                likeButton.setImage(Constant.Image.Icon.Like.circleLikeInactive, for: .normal)
+            }
+        }
+    }
 
     override func configureHierarchy() {
         contentView.addSubview(mainImageView)
@@ -45,5 +57,9 @@ final class SearchPhotoCollectionViewCell: BaseCollectionViewCell {
         let url = URL(string: photo.urls.small)
         mainImageView.kf.setImage(with: url)
         likeCountLabel.numberLabel.text = photo.likes.formatted()
+    }
+
+    @objc private func likeButtonTapped() {
+        addLike?()
     }
 }

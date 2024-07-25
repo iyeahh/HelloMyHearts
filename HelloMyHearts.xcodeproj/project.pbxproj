@@ -30,6 +30,11 @@
 		764168432C4E5F7200C8845C /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764168422C4E5F7200C8845C /* BorderedButton.swift */; };
 		764168462C4E62C500C8845C /* ReuseIdentifierProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764168452C4E62C500C8845C /* ReuseIdentifierProtocol.swift */; };
 		764168482C4E632600C8845C /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764168472C4E632600C8845C /* UIView+.swift */; };
+		765DB6172C527F9700AF1515 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 765DB6162C527F9700AF1515 /* Toast */; };
+		765DB61C2C52827800AF1515 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 765DB61B2C52827800AF1515 /* RealmSwift */; };
+		765DB61F2C52829600AF1515 /* LikeTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765DB61E2C52829600AF1515 /* LikeTable.swift */; };
+		765DB6212C52846200AF1515 /* RealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765DB6202C52846200AF1515 /* RealmRepository.swift */; };
+		765DB6232C5286BC00AF1515 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765DB6222C5286BC00AF1515 /* UIViewController+.swift */; };
 		768890052C512208006CD489 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768890042C512208006CD489 /* APIService.swift */; };
 		768890082C51221D006CD489 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 768890072C51221D006CD489 /* Alamofire */; };
 		7688900A2C5122AD006CD489 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768890092C5122AD006CD489 /* APIKey.swift */; };
@@ -62,6 +67,9 @@
 		764168422C4E5F7200C8845C /* BorderedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
 		764168452C4E62C500C8845C /* ReuseIdentifierProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseIdentifierProtocol.swift; sourceTree = "<group>"; };
 		764168472C4E632600C8845C /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
+		765DB61E2C52829600AF1515 /* LikeTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeTable.swift; sourceTree = "<group>"; };
+		765DB6202C52846200AF1515 /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
+		765DB6222C5286BC00AF1515 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		768890042C512208006CD489 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		768890092C5122AD006CD489 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		7688900C2C512602006CD489 /* ResultPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultPhoto.swift; sourceTree = "<group>"; };
@@ -72,8 +80,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				765DB6172C527F9700AF1515 /* Toast in Frameworks */,
 				768890102C512ABA006CD489 /* Kingfisher in Frameworks */,
 				764168372C4E504200C8845C /* SnapKit in Frameworks */,
+				765DB61C2C52827800AF1515 /* RealmSwift in Frameworks */,
 				768890082C51221D006CD489 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -101,8 +111,8 @@
 		764167FE2C4E31E600C8845C /* HelloMyHearts */ = {
 			isa = PBXGroup;
 			children = (
+				765DB6192C5281F400AF1515 /* Utill */,
 				764168442C4E62B300C8845C /* Protocol */,
-				7641683F2C4E5D6E00C8845C /* API */,
 				764168382C4E508600C8845C /* CustomView */,
 				764168322C4E4F4300C8845C /* Base */,
 				764168182C4E346400C8845C /* Extensions */,
@@ -130,6 +140,7 @@
 			children = (
 				764168192C4E347000C8845C /* UIColor+.swift */,
 				764168472C4E632600C8845C /* UIView+.swift */,
+				765DB6222C5286BC00AF1515 /* UIViewController+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -250,6 +261,24 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
+		765DB6182C5281E100AF1515 /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				765DB61E2C52829600AF1515 /* LikeTable.swift */,
+				765DB6202C52846200AF1515 /* RealmRepository.swift */,
+			);
+			path = Realm;
+			sourceTree = "<group>";
+		};
+		765DB6192C5281F400AF1515 /* Utill */ = {
+			isa = PBXGroup;
+			children = (
+				7641683F2C4E5D6E00C8845C /* API */,
+				765DB6182C5281E100AF1515 /* Realm */,
+			);
+			path = Utill;
+			sourceTree = "<group>";
+		};
 		7688900B2C5125D6006CD489 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -278,6 +307,8 @@
 				764168362C4E504200C8845C /* SnapKit */,
 				768890072C51221D006CD489 /* Alamofire */,
 				7688900F2C512ABA006CD489 /* Kingfisher */,
+				765DB6162C527F9700AF1515 /* Toast */,
+				765DB61B2C52827800AF1515 /* RealmSwift */,
 			);
 			productName = HelloMyHearts;
 			productReference = 764167FC2C4E31E600C8845C /* HelloMyHearts.app */;
@@ -311,6 +342,8 @@
 				764168352C4E504200C8845C /* XCRemoteSwiftPackageReference "SnapKit" */,
 				768890062C51221D006CD489 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				7688900E2C512ABA006CD489 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				765DB6152C527F9700AF1515 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
+				765DB61A2C52827800AF1515 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = 764167FD2C4E31E600C8845C /* Products */;
 			projectDirPath = "";
@@ -342,6 +375,7 @@
 				764168002C4E31E600C8845C /* AppDelegate.swift in Sources */,
 				7688900A2C5122AD006CD489 /* APIKey.swift in Sources */,
 				7641682C2C4E437500C8845C /* SaveViewController.swift in Sources */,
+				765DB61F2C52829600AF1515 /* LikeTable.swift in Sources */,
 				764168312C4E4F3300C8845C /* SearchPhotoCollectionViewCell.swift in Sources */,
 				7641681A2C4E347000C8845C /* UIColor+.swift in Sources */,
 				764168022C4E31E600C8845C /* SceneDelegate.swift in Sources */,
@@ -355,6 +389,8 @@
 				764168202C4E426100C8845C /* TabBarViewController.swift in Sources */,
 				764168262C4E434400C8845C /* TrendViewController.swift in Sources */,
 				764168462C4E62C500C8845C /* ReuseIdentifierProtocol.swift in Sources */,
+				765DB6232C5286BC00AF1515 /* UIViewController+.swift in Sources */,
+				765DB6212C52846200AF1515 /* RealmRepository.swift in Sources */,
 				764168282C4E436400C8845C /* RandomImageViewController.swift in Sources */,
 				764168412C4E5D9600C8845C /* Sort.swift in Sources */,
 				764168482C4E632600C8845C /* UIView+.swift in Sources */,
@@ -523,6 +559,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -555,6 +592,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -593,6 +631,22 @@
 				minimumVersion = 5.7.1;
 			};
 		};
+		765DB6152C527F9700AF1515 /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.1;
+			};
+		};
+		765DB61A2C52827800AF1515 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				kind = exactVersion;
+				version = 10.52.1;
+			};
+		};
 		768890062C51221D006CD489 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -616,6 +670,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 764168352C4E504200C8845C /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		765DB6162C527F9700AF1515 /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 765DB6152C527F9700AF1515 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
+		};
+		765DB61B2C52827800AF1515 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 765DB61A2C52827800AF1515 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 		768890072C51221D006CD489 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;

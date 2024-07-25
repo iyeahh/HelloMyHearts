@@ -13,7 +13,7 @@ class GrayBackgroundView: UIView {
         let view = UIView()
         view.backgroundColor = Constant.Color.secondaryDarkGray
         view.layer.masksToBounds = true
-        view.layer.cornerRadius = Constant.LiteralInt.cornerRadius
+        view.layer.cornerRadius = Constant.LiteralNumber.cornerRadius
         return view
     }()
 

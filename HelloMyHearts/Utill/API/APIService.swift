@@ -5,7 +5,7 @@
 //  Created by Bora Yang on 7/24/24.
 //
 
-import Foundation
+import UIKit
 import Alamofire
 
 final class APIService {

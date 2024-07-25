@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Toast
 
 final class SearchViewController: BaseViewController {
     private let topBarView = BarView()
@@ -89,6 +90,17 @@ final class SearchViewController: BaseViewController {
 }
 
 extension SearchViewController {
+    private func createCollectionViewLayout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        let width = (UIScreen.main.bounds.width - 5) / 2
+        layout.itemSize = CGSize(width: width, height: width * 1.3)
+        layout.scrollDirection = .vertical
+        layout.minimumInteritemSpacing = 5
+        layout.minimumLineSpacing = 5
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        return layout
+    }
+
     private func configureCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -132,19 +144,6 @@ extension SearchViewController {
     }
 }
 
-extension SearchViewController {
-    private func createCollectionViewLayout() -> UICollectionViewFlowLayout {
-        let layout = UICollectionViewFlowLayout()
-        let width = (UIScreen.main.bounds.width - 5) / 2
-        layout.itemSize = CGSize(width: width, height: width * 1.3)
-        layout.scrollDirection = .vertical
-        layout.minimumInteritemSpacing = 5
-        layout.minimumLineSpacing = 5
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        return layout
-    }
-}
-
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return list.count
@@ -155,7 +154,22 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
             return UICollectionViewCell()
         }
 
-        cell.configureData(photo: list[indexPath.item])
+        let photo = list[indexPath.item]
+
+        cell.addLike = { [weak self] in
+            guard let self else { return }
+            cell.isLike.toggle()
+            if cell.isLike {
+                view.makeToast(Constant.LiteralString.ToastMessage.addLike, duration: Constant.LiteralNumber.toastDuration)
+                saveImageToDocument(urlString: photo.urls.small, id: photo.id)
+                RealmRepository.shared.createLike(id: photo.id)
+            } else {
+                view.makeToast(Constant.LiteralString.ToastMessage.removeLike, duration: Constant.LiteralNumber.toastDuration)
+                removeImageFromDocument(id: photo.id)
+                RealmRepository.shared.deleteLike(id: photo.id)
+            }
+        }
+        cell.configureData(photo: photo)
         return cell
     }
 
