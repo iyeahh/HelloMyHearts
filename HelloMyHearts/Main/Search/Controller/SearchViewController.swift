@@ -162,11 +162,11 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
             if cell.isLike {
                 view.makeToast(Constant.LiteralString.ToastMessage.addLike, duration: Constant.LiteralNumber.toastDuration)
                 saveImageToDocument(urlString: photo.urls.small, id: photo.id)
-                RealmRepository.shared.createLike(id: photo.id)
+                LikeTabelRepository.shared.createLike(id: photo.id)
             } else {
                 view.makeToast(Constant.LiteralString.ToastMessage.removeLike, duration: Constant.LiteralNumber.toastDuration)
                 removeImageFromDocument(id: photo.id)
-                RealmRepository.shared.deleteLike(id: photo.id)
+                LikeTabelRepository.shared.deleteLike(id: photo.id)
             }
         }
         cell.configureData(photo: photo)

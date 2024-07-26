@@ -1,5 +1,5 @@
 //
-//  RealmRepository.swift
+//  LikeTabelRepository.swift
 //  HelloMyHearts
 //
 //  Created by Bora Yang on 7/25/24.
@@ -8,8 +8,8 @@
 import Foundation
 import RealmSwift
 
-final class RealmRepository {
-    static let shared = RealmRepository()
+final class LikeTabelRepository {
+    static let shared = LikeTabelRepository()
     private let realm = try! Realm()
 
     private init() {}
@@ -28,6 +28,18 @@ final class RealmRepository {
 
     func readLike() -> Results<LikeTable> {
         return realm.objects(LikeTable.self)
+    }
+
+    func checkIsLike(id: String) -> Bool {
+        let data = readLike().where {
+            $0.id == id
+        }
+
+        if data.count == 0 {
+            return false
+        } else {
+            return true
+        }
     }
 
     func deleteLike(id: String) {

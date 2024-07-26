@@ -33,7 +33,7 @@
 		765DB6172C527F9700AF1515 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 765DB6162C527F9700AF1515 /* Toast */; };
 		765DB61C2C52827800AF1515 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 765DB61B2C52827800AF1515 /* RealmSwift */; };
 		765DB61F2C52829600AF1515 /* LikeTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765DB61E2C52829600AF1515 /* LikeTable.swift */; };
-		765DB6212C52846200AF1515 /* RealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765DB6202C52846200AF1515 /* RealmRepository.swift */; };
+		765DB6212C52846200AF1515 /* LikeTabelRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765DB6202C52846200AF1515 /* LikeTabelRepository.swift */; };
 		765DB6232C5286BC00AF1515 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765DB6222C5286BC00AF1515 /* UIViewController+.swift */; };
 		768890052C512208006CD489 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768890042C512208006CD489 /* APIService.swift */; };
 		768890082C51221D006CD489 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 768890072C51221D006CD489 /* Alamofire */; };
@@ -68,7 +68,7 @@
 		764168452C4E62C500C8845C /* ReuseIdentifierProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseIdentifierProtocol.swift; sourceTree = "<group>"; };
 		764168472C4E632600C8845C /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		765DB61E2C52829600AF1515 /* LikeTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeTable.swift; sourceTree = "<group>"; };
-		765DB6202C52846200AF1515 /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
+		765DB6202C52846200AF1515 /* LikeTabelRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeTabelRepository.swift; sourceTree = "<group>"; };
 		765DB6222C5286BC00AF1515 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		768890042C512208006CD489 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		768890092C5122AD006CD489 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
@@ -265,7 +265,7 @@
 			isa = PBXGroup;
 			children = (
 				765DB61E2C52829600AF1515 /* LikeTable.swift */,
-				765DB6202C52846200AF1515 /* RealmRepository.swift */,
+				765DB6202C52846200AF1515 /* LikeTabelRepository.swift */,
 			);
 			path = Realm;
 			sourceTree = "<group>";
@@ -390,7 +390,7 @@
 				764168262C4E434400C8845C /* TrendViewController.swift in Sources */,
 				764168462C4E62C500C8845C /* ReuseIdentifierProtocol.swift in Sources */,
 				765DB6232C5286BC00AF1515 /* UIViewController+.swift in Sources */,
-				765DB6212C52846200AF1515 /* RealmRepository.swift in Sources */,
+				765DB6212C52846200AF1515 /* LikeTabelRepository.swift in Sources */,
 				764168282C4E436400C8845C /* RandomImageViewController.swift in Sources */,
 				764168412C4E5D9600C8845C /* Sort.swift in Sources */,
 				764168482C4E632600C8845C /* UIView+.swift in Sources */,

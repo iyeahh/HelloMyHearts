@@ -8,31 +8,21 @@
 import UIKit
 
 extension UIViewController {
-    func urlToImage(urlString: String) -> UIImage? {
-        do {
-            guard let url = URL(string: urlString) else { return nil }
-            let data = try Data(contentsOf: url)
-            return UIImage(data: data)
-        } catch {
-            print("URL을 UIImage로 변환 실패")
-            return nil
-        }
-    }
-
     func saveImageToDocument(urlString: String, id: String) {
         guard let documentDirectory = FileManager.default.urls(
             for: .documentDirectory,
-            in: .userDomainMask).first,
-              let image = urlToImage(urlString: urlString) else { return }
+            in: .userDomainMask).first else { return }
 
         let fileURL = documentDirectory.appendingPathComponent("\(id).jpg")
 
-        guard let data = image.jpegData(compressionQuality: 0.5) else { return }
-
-        do {
-            try data.write(to: fileURL)
-        } catch {
-            print("file save error", error)
+        urlToImage(urlString: urlString) { image in
+            guard let image,
+                  let data = image.jpegData(compressionQuality: 0.5) else { return }
+            do {
+                try data.write(to: fileURL)
+            } catch {
+                print("file save error", error)
+            }
         }
     }
 
@@ -51,21 +41,34 @@ extension UIViewController {
     }
 
     func removeImageFromDocument(id: String) {
-            guard let documentDirectory = FileManager.default.urls(
-                for: .documentDirectory,
-                in: .userDomainMask).first else { return }
+        guard let documentDirectory = FileManager.default.urls(
+            for: .documentDirectory,
+            in: .userDomainMask).first else { return }
 
-            let fileURL = documentDirectory.appendingPathComponent("\(id).jpg")
+        let fileURL = documentDirectory.appendingPathComponent("\(id).jpg")
 
-            if FileManager.default.fileExists(atPath: fileURL.path) {
-                do {
-                    try FileManager.default.removeItem(atPath: fileURL.path)
-                } catch {
-                    print("file remove error", error)
-                }
+        if FileManager.default.fileExists(atPath: fileURL.path) {
+            do {
+                try FileManager.default.removeItem(atPath: fileURL.path)
+            } catch {
+                print("file remove error", error)
+            }
 
-            } else {
-                print("file no exist")
+        } else {
+            print("file no exist")
+        }
+    }
+
+    private func urlToImage(urlString: String, completion: @escaping (UIImage?) -> Void?) {
+        guard let url = URL(string: urlString) else { return }
+
+        DispatchQueue.global(qos: .background).async {
+            do {
+                let data = try Data(contentsOf: url)
+                completion(UIImage(data: data))
+            } catch {
+                print("URL -> UIImage 변환 실패")
             }
         }
+    }
 }
