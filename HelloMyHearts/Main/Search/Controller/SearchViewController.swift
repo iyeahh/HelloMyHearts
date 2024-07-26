@@ -20,20 +20,23 @@ final class SearchViewController: BaseViewController {
         return searchBar
     }()
 
-    private let sortButton = BorderedButton()
-    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
+    private lazy var sortButton = {
+        let button = BorderedButton()
+        button.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
+        return button
+    }()
+
     private let descriptionLabel = {
         let label = UILabel()
         label.font = Constant.Font.bold15
         label.textAlignment = .center
         return label
     }()
+
+    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
     private let bottomBarView = BarView()
 
-    var page = 1
-    var list: [Photo] = []
-    var isEnd = false
-    var searhWord = ""
+    var searchPhoto = SearchPhoto()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,8 +111,14 @@ extension SearchViewController {
         collectionView.register(SearchPhotoCollectionViewCell.self, forCellWithReuseIdentifier: SearchPhotoCollectionViewCell.identifier)
     }
 
+    @objc private func sortButtonTapped() {
+        searchPhoto.sort.toggle()
+        sortButton.titleConfiuration(title: searchPhoto.sortValue.title)
+        callRequest()
+    }
+
     private func callRequest() {
-        APIService.shared.searchPhoto(query: searhWord, page: page, sort: .releveant) { [weak self] value in
+        APIService.shared.searchPhoto(query: searchPhoto.searhWord, page: searchPhoto.page, sort: searchPhoto.sortValue) { [weak self] value in
             guard let self else { return }
 
             switch value {
@@ -123,18 +132,18 @@ extension SearchViewController {
                 collectionView.isHidden = false
                 descriptionLabel.text = ""
 
-                if page == 1 {
-                    list = success.results
+                if searchPhoto.page == 1 {
+                    searchPhoto.list = success.results
                 } else {
-                    list.append(contentsOf: success.results)
+                    searchPhoto.list.append(contentsOf: success.results)
                 }
 
-                if page == success.total_pages {
-                    isEnd = true
+                if searchPhoto.page == success.total_pages {
+                    searchPhoto.isEnd = true
                 }
                 
                 collectionView.reloadData()
-                if page == 1 {
+                if searchPhoto.page == 1 {
                     collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
                 }
             case .failure(let failure):
@@ -146,7 +155,7 @@ extension SearchViewController {
 
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return list.count
+        return searchPhoto.list.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -154,7 +163,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
             return UICollectionViewCell()
         }
 
-        let photo = list[indexPath.item]
+        let photo = searchPhoto.list[indexPath.item]
 
         cell.addLike = { [weak self] in
             guard let self else { return }
@@ -175,8 +184,8 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
 
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for item in indexPaths {
-            if list.count - 4 == item.row && !isEnd {
-                page += 1
+            if searchPhoto.list.count - 4 == item.row && !searchPhoto.isEnd {
+                searchPhoto.page += 1
                 callRequest()
             }
         }
@@ -188,8 +197,8 @@ extension SearchViewController: UISearchBarDelegate {
         guard let text = searchBar.text else {
             return
         }
-        page = 1
-        searhWord = text
+        searchPhoto.page = 1
+        searchPhoto.searhWord = text
         callRequest()
     }
 }

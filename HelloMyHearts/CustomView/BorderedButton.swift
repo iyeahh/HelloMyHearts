@@ -21,7 +21,7 @@ class BorderedButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configureButton() -> UIButton.Configuration {
+    private func configureButton() -> UIButton.Configuration {
         var configuration = UIButton.Configuration.bordered()
         configuration.cornerStyle = .capsule
         configuration.image = Sort.image
@@ -29,9 +29,15 @@ class BorderedButton: UIButton {
         configuration.baseBackgroundColor = Constant.Color.primary
         configuration.baseForegroundColor = Constant.Color.secondary
 
-        var titleAttr = AttributedString.init(Sort.latest.title)
+        var titleAttr = AttributedString.init(Sort.releveant.title)
         titleAttr.font = .boldSystemFont(ofSize: 15)
         configuration.attributedTitle = titleAttr
         return configuration
+    }
+
+    func titleConfiuration(title: String) {
+        var titleAttr = AttributedString.init(title)
+        titleAttr.font = .boldSystemFont(ofSize: 15)
+        configuration?.attributedTitle = titleAttr
     }
 }
